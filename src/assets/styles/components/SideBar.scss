@@ -11,7 +11,7 @@
     width: 37vh;
     overflow-y: auto;
     overflow-x: hidden;
-    border-right: 3px #F5F5F5 solid;
+    border-right: 3px #242424 solid;
     &-wrapper {
         display: flex;
         justify-content: space-between;
@@ -19,7 +19,7 @@
         padding: 50px 30px;
 
         h4 {
-            color: #CECECE;
+            color: #404040;
             @include textHeader;
             font-weight: 600;
             margin: 0 0 10px 1.7rem;

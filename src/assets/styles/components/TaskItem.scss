@@ -6,14 +6,19 @@
     height: 110px;
     background: $sidebar-background;
     border-radius: $border-radius;
-    border: 2px solid #DCDCDC;
+    border: 2px solid #302F2F;
     margin-bottom: 10px;
     cursor: pointer;
+    transition: 250ms all $transition;
+
+    &:hover {
+        background: #121111;
+    }
 
     h3 {
         @include textPlain;
         margin: 0;
         font-size: 1rem;
-        color: $black;
+        color: $white;
     }
 }
