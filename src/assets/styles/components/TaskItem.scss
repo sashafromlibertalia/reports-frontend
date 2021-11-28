@@ -2,12 +2,11 @@
 @import "src/assets/styles/helpers/typography";
 
 .task-item {
-    width: 200px;
-    height: 110px;
-    background: $sidebar-background;
+    width: 18rem;
+    background: #151515;
     border-radius: $border-radius;
     border: 2px solid #302F2F;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
     cursor: pointer;
     transition: 250ms all $transition;
 
@@ -15,10 +14,43 @@
         background: #121111;
     }
 
-    h3 {
+    &-body {
+        height: 75%;
+        padding: 16px 20px;
+        width: 100%;
+        h3 {
+            @include textHeader;
+            margin: 0;
+            font-size: 1.2rem;
+            color: $white;
+        }
+
+        p {
+            @include textPlain;
+            margin: 8px 0 0 0;
+            font-size: 1rem;
+            color: #B6B6B6;
+        }
+
+        span {
+            width: 1.8rem;
+            height: 1.8rem;
+            margin: 10px 0 0 0;
+            border-radius: 50%;
+            display: block;
+        }
+    }
+
+    &-footer {
+        height: 25%;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        padding: 0.5rem 1rem;
+        font-size: 14px;
+        align-items: center;
+        border-top: 2px solid #302F2F;
+        color: #B6B6B6;
         @include textPlain;
-        margin: 0;
-        font-size: 1rem;
-        color: $white;
     }
 }

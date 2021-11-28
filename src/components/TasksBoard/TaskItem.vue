@@ -1,6 +1,13 @@
 <template>
     <div class="task-item">
-        <h3>Я заголовок</h3>
+        <div class="task-item-body">
+            <h3>Таска</h3>
+            <p>Нет описания</p>
+            <span></span>
+        </div>
+        <div class="task-item-footer">
+            2 комментария
+        </div>
     </div>
 </template>
 
