@@ -1,7 +1,6 @@
 <template>
     <router-link :to="{path: this.link}" class="sidebar-item">
-            <span>
-                <img :src='path' alt="icon">
+            <span :style="{backgroundImage: path}">
             </span>
         <h3>{{ this.name }}</h3>
     </router-link>
@@ -27,7 +26,7 @@ export default {
     data() {
         return {
             isClicked: false,
-            path: require(`/src/assets/icons/${this.icon}`),
+            path: `url(${require(`/src/assets/icons/${this.icon}`)})`
         }
     }
 }

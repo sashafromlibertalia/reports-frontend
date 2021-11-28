@@ -6,11 +6,12 @@
     border-radius: $border-radius;
     transition: 200ms all $transition;
     display: flex;
-    align-content: center;
+    align-items: center;
     text-decoration: none;
     flex-direction: row;
     cursor: pointer;
     height: 3rem;
+    margin-bottom: 0.8em;
 
     h3 {
         @include textPlain;
@@ -19,7 +20,7 @@
         display: flex;
         margin-left: 24px;
         align-items: center;
-        color: $main-color;
+        color: $brand;
     }
 
     span {
@@ -27,26 +28,23 @@
         margin-left: 1.7rem;
         justify-content: center;
         align-items: center;
-
-        img {
-            width: 1.6rem;
-            height: 1.6rem;
-        }
+        width: 1.6rem;
+        height: 1.6rem;
+        background-repeat: no-repeat no-repeat;
+        background-size: contain;
     }
 
     &:hover {
-        background: $main-color__hover;
+        background: $brand__hover;
     }
 
+
     &.router-link-active {
-        background: $main-color;
-
-        & h3 {
-            color: $sidebar-background
-        }
-
-        & span * {
-            color: $sidebar-background
+        &::before {
+            content: '';
+            width: 6px;
+            height: 100%;
+            background: $brand;
         }
     }
 }

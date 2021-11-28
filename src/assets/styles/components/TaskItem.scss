@@ -1,0 +1,19 @@
+@import "src/assets/styles/helpers/variables";
+@import "src/assets/styles/helpers/typography";
+
+.task-item {
+    width: 200px;
+    height: 110px;
+    background: $sidebar-background;
+    border-radius: $border-radius;
+    border: 2px solid #DCDCDC;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    h3 {
+        @include textPlain;
+        margin: 0;
+        font-size: 1rem;
+        color: $black;
+    }
+}

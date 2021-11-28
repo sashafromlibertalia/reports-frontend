@@ -1,6 +1,6 @@
 <template>
     <div>
-        Это спринты
+        <h1 class="page-title">Спринты</h1>
     </div>
 </template>
 
