@@ -1,0 +1,10 @@
+@import "src/assets/styles/base/fonts";
+@import "variables";
+
+@mixin textPlain {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+@mixin textHeader {
+    font-family: 'Montserrat', sans-serif;
+}

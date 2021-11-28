@@ -1,0 +1,52 @@
+@import "src/assets/styles/base/common";
+@import "src/assets/styles/helpers/variables";
+@import "src/assets/styles/helpers/typography";
+
+.sidebar-item {
+    border-radius: $border-radius;
+    transition: 200ms all $transition;
+    display: flex;
+    align-content: center;
+    text-decoration: none;
+    flex-direction: row;
+    cursor: pointer;
+    height: 3rem;
+
+    h3 {
+        @include textPlain;
+        font-weight: bold;
+        font-size: 1.3rem;
+        display: flex;
+        margin-left: 24px;
+        align-items: center;
+        color: $main-color;
+    }
+
+    span {
+        display: flex;
+        margin-left: 1.7rem;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 1.6rem;
+            height: 1.6rem;
+        }
+    }
+
+    &:hover {
+        background: $main-color__hover;
+    }
+
+    &.router-link-active {
+        background: $main-color;
+
+        & h3 {
+            color: $sidebar-background
+        }
+
+        & span * {
+            color: $sidebar-background
+        }
+    }
+}

@@ -1,0 +1,23 @@
+@import "base/common";
+@import "base/fonts";
+@import "base/normalize";
+
+@import "helpers/variables";
+
+@import "components/Sidebar";
+
+
+body {
+    background: $background;
+}
+
+.main-content {
+    padding: 40px;
+    position: fixed;
+    top: 0;
+    left: 37vh;
+    height: 100%;
+    min-height: auto;
+    width: calc(100% - 37vh);
+    overflow: auto;
+}

@@ -1,0 +1,35 @@
+@import "src/assets/styles/base/common";
+@import "src/assets/styles/helpers/variables";
+@import "src/assets/styles/helpers/typography";
+
+.sidebar {
+    background: $sidebar-background;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 37vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-right: 3px #F5F5F5 solid;
+    &-wrapper {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: 50px 30px;
+
+        h4 {
+            color: #CECECE;
+            @include textHeader;
+            font-weight: bold;
+            margin: 0 0 10px 2rem;
+            display: flex;
+            text-align: left;
+            font-size: 1rem;
+        }
+    }
+
+    &-section {
+        margin-bottom: 3rem;
+    }
+}
