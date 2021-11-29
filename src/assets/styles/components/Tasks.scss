@@ -7,6 +7,9 @@
     justify-content: space-between;
     align-items: flex-start;
     flex-direction: column;
+    background: #181818;
+    padding: 20px;
+    border-radius: $border-radius;
     margin-right: 2rem;
 
     &-wrapper {
@@ -26,6 +29,7 @@
     .underline {
         width: 100%;
         height: 2px;
+        margin-top: 4px;
     }
 }
 
@@ -35,14 +39,109 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+
     & h3 {
         @include textPlain;
         margin: 0;
+        font-size: 1.3rem;
         color: $white;
         font-weight: 600;
     }
+}
 
-    & .unicon {
-        cursor: pointer !important;
+
+.drawer {
+    position: fixed;
+    right: -35%;
+    top: 0;
+    z-index: 100;
+    height: 100%;
+    width: 35%;
+    background: #1D1D1D;
+    transition: all 0.3s ease;
+
+    &.active {
+        box-shadow: -17px 0px 28px rgba(35, 33, 33, 0.01);
+        right: 0;
+    }
+
+    .wrapper {
+        padding: 70px;
+        height: 100%;
+        overflow: auto;
+    }
+
+    .creation-item {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 28px;
+        h3 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: $white;
+        }
+
+        input {
+            outline: none;
+            border: none;
+            width: 90%;
+            border-radius: $border-radius;
+            padding: 4px 16px;
+            background: black;
+            color: $white;
+        }
+    }
+}
+
+
+.mask {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.46);
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+section:last-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 8rem;
+
+    .submit-new-item {
+        border: none;
+        outline: none;
+        padding: 16px;
+        background: $brand;
+        color: #1D1D1D;
+        border-radius: $border-radius;
+        @include textHeader;
+        font-weight: 700;
+        width: 100%;
+        transition: 200ms ease all;
+
+        &:hover {
+            background: $brand__hover;
+        }
+    }
+}
+
+
+.close-form {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    transition: all 200ms $transition;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.46);
     }
 }

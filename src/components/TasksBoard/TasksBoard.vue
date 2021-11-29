@@ -2,17 +2,12 @@
     <div class="task-board">
         <section class="task-board-type">
             <div class="task-type-wrapper">
-                <h3>{{this.status}}</h3>
-                <unicon name="plus-circle" :fill="getFill(this.status)" />
+                <h3>{{this.status}}: 1</h3>
+                <unicon name="plus-circle" :fill="getFill(this.status)" @click="addTask(status)"/>
             </div>
             <span class="underline" :style="{background: getFill(status)}"/>
         </section>
         <div>
-            <TaskItem/>
-            <TaskItem/>
-            <TaskItem/>
-            <TaskItem/>
-            <TaskItem/>
             <TaskItem/>
         </div>
     </div>
@@ -47,6 +42,10 @@ export default {
                 case taskStatuses.DONE:
                     return colors.DONE
             }
+        },
+        addTask(e) {
+            console.log(e)
+            this.$emit('change', e)
         }
     },
     components: {

@@ -15,5 +15,11 @@ html, body {
 .page-title {
     color: $white;
     @include textHeader;
-    font-size: 2.5rem;
+    margin: 0 0 3rem 0;
+    font-weight: 700;
+    font-size: 2.5rem !important;
+}
+
+.unicon {
+    cursor: pointer !important;
 }
