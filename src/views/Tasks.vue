@@ -2,7 +2,7 @@
     <div>
         <h1 class="page-title">Задачи</h1>
         <div class="task-board-wrapper">
-            <template v-if="tasks.length > 0">
+            <template v-if="this.allTasks.length > 0">
                 <TasksBoard :status="statuses.WAITING" @change="openForm"/>
                 <TasksBoard :status="statuses.IN_PROGRESS" @change="openForm"/>
                 <TasksBoard :status="statuses.DONE" @change="openForm"/>
@@ -38,9 +38,10 @@
 </template>
 
 <script>
-import TasksBoard from "@/components/TasksBoard/TasksBoard";
+import TasksBoard from "@/components/taskboard/TasksBoard";
 import taskStatuses from "@/store/enums/taskStatuses";
 import EmptyData from "@/views/EmptyData";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
     name: "Tasks",
@@ -49,14 +50,13 @@ export default {
             statuses: taskStatuses,
             isCreatingTask: false,
             taskType: null,
-            tasks: [
-                {
-                    status: taskStatuses.WAITING
-                }
-            ]
         }
     },
+    computed: {
+        ...mapGetters('tasks', ['allTasks'])
+    },
     methods: {
+        ...mapActions('tasks', ['getAllTasks']),
         openForm(e) {
             this.isCreatingTask = true
             if (Object.values(taskStatuses).includes(e)) {
@@ -64,9 +64,11 @@ export default {
             }
         },
         handleCreateNewTask() {
-            alert(this.taskType)
             this.isCreatingTask = false
         },
+    },
+    async mounted() {
+        await this.getAllTasks()
     },
     components: {
         TasksBoard,

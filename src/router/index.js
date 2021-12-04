@@ -6,6 +6,7 @@ import SidebarActions from "@/store/enums/sidebarActions";
 import Sprints from "@/views/Sprints";
 import MyEmployees from "@/views/MyEmployees";
 import CreateEmployee from "@/views/actions/CreateEmployee";
+import TaskPage from "@/views/tasks/TaskPage";
 
 Vue.use(VueRouter)
 const routes = [
@@ -28,6 +29,12 @@ const routes = [
         path: SidebarActions.NEW_EMPLOYEE.link,
         name: 'CreateEmployee',
         component: CreateEmployee
+    },
+    {
+        path: "/tasks/:id",
+        name: "TaskPage",
+        component: TaskPage,
+        props: true
     }]
 
 const router = new VueRouter({

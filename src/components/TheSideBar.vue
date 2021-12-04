@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import SideBarItem from "@/components/Sidebar/SideBarItem";
+import SideBarItem from "@/components/sidebar/SideBarItem";
 import sidebarActions from "@/store/enums/sidebarActions"
 
 export default {

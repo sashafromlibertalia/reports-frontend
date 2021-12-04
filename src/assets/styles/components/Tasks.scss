@@ -4,12 +4,13 @@
 
 .task-board {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     background: #181818;
     padding: 20px;
     border-radius: $border-radius;
+    min-width: 20rem;
     margin-right: 2rem;
 
     &-wrapper {
@@ -139,6 +140,7 @@ section:last-child {
     justify-content: center;
     align-items: center;
     margin-left: auto;
+    cursor: pointer;
     transition: all 200ms $transition;
 
     &:hover {
