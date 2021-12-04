@@ -3,7 +3,7 @@
         <div class="task-item">
             <div class="task-item-body">
                 <h3>{{ this.item.name }}</h3>
-                <p>{{ this.item.description }}</p>
+                <p>{{ description }}</p>
                 <span></span>
             </div>
             <div class="task-item-footer">
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+const MaximumDescriptionLength = 40
 export default {
     props: {
         item: {
@@ -22,6 +23,18 @@ export default {
         }
     },
     name: "TaskItem",
+    computed: {
+        description() {
+            if (this.item.description.length > 0) {
+                if (this.item.description.length > MaximumDescriptionLength)
+                    return this.item.description.slice(0, MaximumDescriptionLength) + '...'
+                else
+                    return this.item.description
+            } else {
+                return 'Нет описания'
+            }
+        }
+    }
 }
 </script>
 

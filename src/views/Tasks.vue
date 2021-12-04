@@ -72,7 +72,7 @@ export default {
     },
     components: {
         TasksBoard,
-        EmptyData
+        EmptyData,
     }
 }
 </script>

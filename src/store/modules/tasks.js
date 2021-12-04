@@ -42,6 +42,17 @@ const actions = {
         } catch (e) {
             console.log(e)
         }
+    },
+    async updateTask(_, payload) {
+        try {
+            await api.patch(`tasks/edit/${payload.id}`, {}, {
+                params: {
+                    status: payload.status
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 

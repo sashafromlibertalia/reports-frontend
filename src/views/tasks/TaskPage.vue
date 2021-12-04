@@ -4,7 +4,7 @@
             <h1 class="page-title">Задача #{{ this.currentTask.id }}</h1>
             <div class="task-status">
                 <span :style="{background: getStatusColor(this.currentTask.status)}"></span>
-                <p>{{ status }}</p>
+                <b-form-select v-model="selected" :options="options" @change="handleChangeStatus"></b-form-select>
             </div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: flex-start">
@@ -30,6 +30,12 @@ export default {
     props: {
         id: String
     },
+    data() {
+        return {
+            selected: null,
+            options: Object.entries(taskStatuses).map(([value, text]) => ({value, text}))
+        }
+    },
     computed: {
         ...mapGetters('tasks', ['currentTask']),
         status() {
@@ -37,7 +43,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('tasks', ['getSingleTask']),
+        ...mapActions('tasks', ['getSingleTask', 'updateTask']),
         getStatusColor(status) {
             switch (taskStatuses[status]) {
                 case taskStatuses.WAITING:
@@ -47,10 +53,19 @@ export default {
                 case taskStatuses.DONE:
                     return colors.DONE
             }
+        },
+        async handleChangeStatus(e) {
+            await this.updateTask({
+                id: this.id,
+                status: e
+            }).then(async() => {
+                await this.getSingleTask(this.id)
+            })
         }
     },
     async mounted() {
         await this.getSingleTask(this.id)
+        this.selected = this.currentTask.status
     }
 }
 </script>

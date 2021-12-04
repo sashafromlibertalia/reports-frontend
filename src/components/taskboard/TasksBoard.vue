@@ -2,12 +2,12 @@
     <div class="task-board">
         <section class="task-board-type">
             <div class="task-type-wrapper">
-                <h3>{{this.status}}: {{this.tasks.length}}</h3>
+                <h3>{{ this.status }}: {{ this.tasks.length }}</h3>
                 <unicon name="plus-circle" :fill="getFill(this.status)" @click="addTask(status)"/>
             </div>
             <span class="underline" :style="{background: getFill(status)}"/>
         </section>
-        <div>
+        <div class="task-board-content">
             <template v-for="(item, index) in tasks">
                 <TaskItem :key="index" :item="item"/>
             </template>
@@ -64,10 +64,10 @@ export default {
         },
         addTask(e) {
             this.$emit('change', e)
-        }
+        },
     },
     components: {
-        TaskItem
+        TaskItem,
     }
 }
 </script>
