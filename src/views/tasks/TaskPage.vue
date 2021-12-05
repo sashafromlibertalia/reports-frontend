@@ -1,6 +1,7 @@
 <template>
     <div>
         <div style="display: flex; justify-content: space-between; align-items: center">
+            <unicon name="arrow-left" fill="white" @click="handleBack"/>
             <h1 class="page-title">Задача #{{ this.currentTask.id }}</h1>
             <div class="task-status">
                 <span :style="{background: getStatusColor(this.currentTask.status)}"></span>
@@ -38,9 +39,6 @@ export default {
     },
     computed: {
         ...mapGetters('tasks', ['currentTask']),
-        status() {
-            return taskStatuses[this.currentTask.status]
-        }
     },
     methods: {
         ...mapActions('tasks', ['getSingleTask', 'updateTask']),
@@ -58,9 +56,12 @@ export default {
             await this.updateTask({
                 id: this.id,
                 status: e
-            }).then(async() => {
-                await this.getSingleTask(this.id)
+            }).then(() => {
+                this.$router.go(-1)
             })
+        },
+        handleBack() {
+            this.$router.go(-1)
         }
     },
     async mounted() {

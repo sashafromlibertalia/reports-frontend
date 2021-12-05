@@ -1,0 +1,14 @@
+@import "src/assets/styles/base/common";
+@import "src/assets/styles/helpers/variables";
+@import "src/assets/styles/helpers/typography";
+
+.create-employee-container {
+    width: fit-content;
+}
+
+.form-container {
+    min-height: 14rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}

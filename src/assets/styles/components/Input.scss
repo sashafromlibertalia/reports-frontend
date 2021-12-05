@@ -1,0 +1,33 @@
+@import "src/assets/styles/base/common";
+@import "src/assets/styles/helpers/variables";
+@import "src/assets/styles/helpers/typography";
+
+.input {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 40rem;
+
+    .header {
+
+        h3 {
+            @include textHeader;
+            color: $gray;
+            font-weight: bold;
+            padding-left: 20px;
+            font-size: 1.2rem;
+        }
+    }
+
+    input {
+        margin: 0;
+        outline: none;
+        border: none;
+        background: black;
+        padding: 12px 0 12px 20px;
+        font-size: 1.5rem;
+        border-radius: $border-radius * 2;
+        color: $white;
+        @include textPlain;
+    }
+}
