@@ -1,6 +1,6 @@
-@import "src/assets/styles/base/common";
-@import "src/assets/styles/helpers/variables";
-@import "src/assets/styles/helpers/typography";
+@import "../base/common";
+@import "../helpers/variables";
+@import "../helpers/typography";
 
 .task-board {
     display: flex;

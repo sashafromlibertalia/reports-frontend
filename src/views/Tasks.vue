@@ -78,5 +78,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "src/assets/styles/components/Tasks";
+@import "../assets/styles/views/Tasks";
 </style>

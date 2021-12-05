@@ -1,7 +1,6 @@
 <template>
     <router-link :to="{path: this.link}" class="sidebar-item">
-            <span :style="{backgroundImage: path}">
-            </span>
+        <span :style="{backgroundImage: path}"></span>
         <h3>{{ this.name }}</h3>
     </router-link>
 </template>
