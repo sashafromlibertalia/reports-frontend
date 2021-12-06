@@ -27,3 +27,18 @@ a {
 .unicon {
     cursor: pointer !important;
 }
+
+.delete-item {
+    background: #b9173c;
+    border-radius: $border-radius;
+    @include textPlain;
+    color: $white;
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    transition: all 200ms ease;
+
+    &:hover {
+        background: #690a1f;
+    }
+}

@@ -6,9 +6,9 @@ import SidebarActions from "@/store/enums/sidebarActions";
 import Sprints from "@/views/Sprints";
 import MyEmployees from "@/views/MyEmployees";
 import CreateEmployee from "@/views/actions/CreateEmployee";
-import TaskPage from "@/views/tasks/TaskPage";
+import TaskPage from "@/views/preview/TaskPage";
 import NotFound from "@/views/NotFound"
-import EmployeePage from "@/views/employees/EmployeePage";
+import EmployeePage from "@/views/preview/EmployeePage";
 
 Vue.use(VueRouter)
 const routes = [

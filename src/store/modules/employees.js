@@ -23,7 +23,7 @@ const actions = {
             console.log(e)
         }
     },
-    async getSingleUser({commit}, payload) {
+    async getCurrentUser({commit}, payload) {
         try {
             const {data} = await api.get(`employees/${payload}`)
             commit('SET_CURRENT_USER', data)
@@ -34,6 +34,14 @@ const actions = {
     async createUser(_, payload) {
         try {
             const {data} = await api.post('employees', payload)
+            return data
+        } catch (e) {
+            console.log(e)
+        }
+    },
+    async removeUser(_, payload) {
+        try {
+            const {data} = await api.post(`employees/remove/${payload}`)
             return data
         } catch (e) {
             console.log(e)

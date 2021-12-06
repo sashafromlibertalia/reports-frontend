@@ -60,6 +60,14 @@ const actions = {
         } catch (e) {
             console.log(e)
         }
+    },
+    async removeTask(_, payload) {
+        try {
+            const {data} =await api.post(`tasks/remove/${payload}`)
+            return data
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 

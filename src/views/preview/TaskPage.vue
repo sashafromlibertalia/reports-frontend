@@ -32,6 +32,7 @@
                 </div>
             </div>
         </div>
+        <button class="delete-item" type="button" @click="handleRemoveTask">Удалить задачу</button>
     </div>
 </template>
 
@@ -58,7 +59,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('tasks', ['getSingleTask', 'updateTask']),
+        ...mapActions('tasks', ['getSingleTask', 'updateTask', 'removeTask']),
         getStatusColor(status) {
             switch (taskStatuses[status]) {
                 case taskStatuses.WAITING:
@@ -77,6 +78,19 @@ export default {
                 this.$router.go(-1)
             })
         },
+        async handleRemoveTask() {
+            if (await this.removeTask(this.id)) {
+                this.$toasted.show('Задача была удалена', {
+                    duration : 5000
+                })
+                this.handleBack()
+            } else {
+                this.$toasted.show('Задача не была удалена', {
+                    duration : 5000
+                })
+                this.handleBack()
+            }
+        },
         handleBack() {
             this.$router.go(-1)
         }
@@ -89,5 +103,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "src/assets/styles/views/TaskPage";
+@import "../../assets/styles/views/TaskPage";
 </style>

@@ -28,6 +28,7 @@
                 </div>
             </div>
         </div>
+        <button class="delete-item" type="button" @click="handleRemoveEmployee">Удалить сотрудника</button>
     </div>
 </template>
 
@@ -53,17 +54,30 @@ export default {
         ...mapGetters('employees', ['currentUser'])
     },
     methods: {
-        ...mapActions('employees', ['getSingleUser']),
+        ...mapActions('employees', ['getCurrentUser', 'removeUser']),
+        async handleRemoveEmployee() {
+            if (await this.removeUser(this.id)) {
+                this.$toasted.show('Сотрудник был удален', {
+                    duration : 5000
+                })
+                this.handleBack()
+            } else {
+                this.$toasted.show('Сотрудник не был удален', {
+                    duration : 5000
+                })
+                this.handleBack()
+            }
+        },
         handleBack() {
             this.$router.go(-1)
         }
     },
     async mounted() {
-        await this.getSingleUser(this.id)
+        await this.getCurrentUser(this.id)
     }
 }
 </script>
 
 <style scoped lang="scss">
-@import "src/assets/styles/views/EmployeePage";
+@import "../../assets/styles/views/EmployeePage";
 </style>
