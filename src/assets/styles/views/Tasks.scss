@@ -4,6 +4,7 @@
 
 .task-board {
     display: flex;
+    height: fit-content;
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
@@ -87,7 +88,7 @@
         input {
             outline: none;
             border: none;
-            width: 90%;
+            width: 100%;
             border-radius: $border-radius;
             padding: 4px 16px;
             background: black;
@@ -118,6 +119,7 @@ section:last-child {
         border: none;
         outline: none;
         padding: 16px;
+        font-size: 1.2rem;
         background: $brand;
         color: #1D1D1D;
         border-radius: $border-radius;

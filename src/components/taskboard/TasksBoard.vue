@@ -3,7 +3,7 @@
         <section class="task-board-type">
             <div class="task-type-wrapper">
                 <h3>{{ this.status }}: {{ this.tasks.length }}</h3>
-                <unicon name="plus-circle" :fill="getFill(this.status)" @click="addTask(status)"/>
+                <unicon name="plus-circle" :fill="getFill(this.status)" @click="addTask(status);"/>
             </div>
             <span class="underline" :style="{background: getFill(status)}"/>
         </section>

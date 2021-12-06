@@ -22,7 +22,8 @@ const actions = {
     },
     async createUser(_, payload) {
         try {
-            await api.post('employees', payload)
+            const {data} = await api.post('employees', payload)
+            return data
         } catch (e) {
             console.log(e)
         }

@@ -43,6 +43,13 @@ const actions = {
             console.log(e)
         }
     },
+    async createTask(_, payload) {
+        try {
+            await api.post('tasks', payload)
+        } catch (e) {
+            console.log(e)
+        }
+    },
     async updateTask(_, payload) {
         try {
             await api.patch(`tasks/edit/${payload.id}`, {}, {

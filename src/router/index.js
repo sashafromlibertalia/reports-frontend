@@ -7,6 +7,7 @@ import Sprints from "@/views/Sprints";
 import MyEmployees from "@/views/MyEmployees";
 import CreateEmployee from "@/views/actions/CreateEmployee";
 import TaskPage from "@/views/tasks/TaskPage";
+import NotFound from "@/views/NotFound"
 
 Vue.use(VueRouter)
 const routes = [
@@ -35,12 +36,29 @@ const routes = [
         name: "TaskPage",
         component: TaskPage,
         props: true
+    },
+    {
+        path: '/404',
+        name: '404',
+        component: NotFound
+    },
+    {
+        path: '*',
+        redirect: '/404'
     }]
 
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes,
+})
+
+router.beforeEach((to, from, next) => {
+    if (!to.matched.length) {
+        next('/404');
+    } else {
+        next();
+    }
 })
 
 export default router

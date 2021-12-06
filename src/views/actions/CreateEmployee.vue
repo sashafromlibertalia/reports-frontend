@@ -2,8 +2,8 @@
     <div class="create-employee-container">
         <h1 class="page-title">Создать сотрудника</h1>
         <div class="form-container">
-            <Input :type="types.NAME" v-model="form.Name"/>
-            <Input :type="types.AGE" v-model="form.Age"/>
+            <Input :type="types.NAME" v-model="form.name"/>
+            <Input :type="types.AGE" v-model="form.age"/>
         </div>
         <section>
             <button type="submit" class="submit-new-item" @click="handleCreateNewEmployee">Добавить</button>
@@ -23,18 +23,27 @@ export default {
         return {
             types: inputs,
             form: {
-                Name: null,
-                Age: null,
-                Role: roles.WORKER
+                name: null,
+                age: null,
+                role: roles.WORKER
             }
         }
     },
     methods: {
         ...mapActions('employees', ['createUser']),
         async handleCreateNewEmployee() {
-            if (this.form.Name !== null && this.form.Age !== null && Number.isInteger(parseInt(this.form.Age, 10))) {
-                this.form.Age = +this.form.Age
-                await this.createUser(this.form)
+            if (this.form.name !== null && this.form.age !== null && Number.isInteger(parseInt(this.form.age, 10))) {
+                this.form.age = +this.form.age
+                if (await this.createUser(this.form))
+                    this.$toasted.show('Сотрудник добавлен', {
+                        duration : 5000
+                    })
+                else
+                    this.$toasted.show('Сотрудник не был добавлен', {
+                        duration : 5000
+                    })
+
+                this.form = {}
             }
             else
                 alert('Кажется, что некоторые данные введены неправильно ☺️')

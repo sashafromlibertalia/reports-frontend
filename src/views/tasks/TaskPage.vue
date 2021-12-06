@@ -1,11 +1,13 @@
 <template>
     <div>
-        <div style="display: flex; justify-content: space-between; align-items: center">
-            <unicon name="arrow-left" fill="white" @click="handleBack"/>
-            <h1 class="page-title">Задача #{{ this.currentTask.id }}</h1>
+        <div style="display: flex; justify-content: space-between; align-items: baseline">
+            <div style="display: flex; justify-content: flex-start; align-items: baseline">
+                <unicon name="arrow-left" fill="white" @click="handleBack" width="50" height="50"/>
+                <h1 class="page-title">Задача #{{ this.currentTask.id }}</h1>
+            </div>
             <div class="task-status">
                 <span :style="{background: getStatusColor(this.currentTask.status)}"></span>
-                <b-form-select v-model="selected" :options="options" @change="handleChangeStatus"></b-form-select>
+                <b-form-select class="bg-dark text-white" v-model="selected" :options="options" @change="handleChangeStatus"></b-form-select>
             </div>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: flex-start">
