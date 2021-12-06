@@ -4,4 +4,10 @@ const roles = Object.freeze({
     WORKER: 'WORKER'
 })
 
-export default roles
+const roleParser = Object.freeze({
+    LEAD: 'Тимлид',
+    MANAGER: 'Руководитель',
+    WORKER: 'Сотрудник'
+})
+
+export default { roles, roleParser}

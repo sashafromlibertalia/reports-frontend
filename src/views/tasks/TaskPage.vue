@@ -10,14 +10,26 @@
                 <b-form-select class="bg-dark text-white" v-model="selected" :options="options" @change="handleChangeStatus"></b-form-select>
             </div>
         </div>
-        <div style="display: flex; flex-direction: column; justify-content: flex-start">
-            <div class="task-content-section">
-                <h3>Название задачи:</h3>
-                <p>{{ this.currentTask.name }}</p>
+        <div style="display: flex; flex-direction: row; justify-content: flex-start">
+            <div class="task-content-column">
+                <div class="task-content-section">
+                    <h3>Название задачи:</h3>
+                    <p>{{ this.currentTask.name }}</p>
+                </div>
+                <div class="task-content-section">
+                    <h3>Исполняющий задачу:</h3>
+                    <router-link :to="'/employees/' + this.currentTask.employeeId">{{ this.currentTask.employeeId }}</router-link>
+                </div>
             </div>
-            <div class="task-content-section">
-                <h3>Описание задачи:</h3>
-                <p>{{ this.currentTask.description }}</p>
+            <div class="task-content-column">
+                <div class="task-content-section">
+                    <h3>Описание задачи:</h3>
+                    <p>{{ this.currentTask.description }}</p>
+                </div>
+                <div class="task-content-section">
+                    <h3>Дата создания:</h3>
+                    <p>{{ creationDate }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -41,6 +53,9 @@ export default {
     },
     computed: {
         ...mapGetters('tasks', ['currentTask']),
+        creationDate() {
+            return this.moment(this.currentTask.createdAt).format("DD/MM/YYYY")
+        }
     },
     methods: {
         ...mapActions('tasks', ['getSingleTask', 'updateTask']),

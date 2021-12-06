@@ -8,6 +8,9 @@ const state = {
 const mutations = {
     SET_ALL_EMPLOYEES(state, payload) {
         state.allUsers = payload
+    },
+    SET_CURRENT_USER(state, payload) {
+        state.currentUser = payload
     }
 }
 
@@ -16,6 +19,14 @@ const actions = {
         try {
             const {data} = await api.get('employees')
             commit('SET_ALL_EMPLOYEES', data)
+        } catch (e) {
+            console.log(e)
+        }
+    },
+    async getSingleUser({commit}, payload) {
+        try {
+            const {data} = await api.get(`employees/${payload}`)
+            commit('SET_CURRENT_USER', data)
         } catch (e) {
             console.log(e)
         }
@@ -31,7 +42,8 @@ const actions = {
 }
 
 const getters = {
-    allUsers: state => state.allUsers
+    allUsers: state => state.allUsers,
+    currentUser: state => state.currentUser
 }
 
 export default {

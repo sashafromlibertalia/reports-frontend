@@ -8,6 +8,7 @@ import MyEmployees from "@/views/MyEmployees";
 import CreateEmployee from "@/views/actions/CreateEmployee";
 import TaskPage from "@/views/tasks/TaskPage";
 import NotFound from "@/views/NotFound"
+import EmployeePage from "@/views/employees/EmployeePage";
 
 Vue.use(VueRouter)
 const routes = [
@@ -35,6 +36,12 @@ const routes = [
         path: "/tasks/:id",
         name: "TaskPage",
         component: TaskPage,
+        props: true
+    },
+    {
+        path: "/employees/:id",
+        name: "EmployeePage",
+        component: EmployeePage,
         props: true
     },
     {
