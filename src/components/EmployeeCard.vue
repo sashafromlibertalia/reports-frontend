@@ -1,16 +1,18 @@
 <template>
     <div class="employee-card">
         <router-link :to="'/employees/' + this.data.id">
-            <h3>{{ this.data.name }}</h3>
-            <div class="info">
-                <ul class="info-list">
-                    <li class="info-row" v-for="(item, index) in info" :key="index">
-                        <div>
-                            <span :style="{backgroundImage: item.path}"></span>
-                            {{ item.data }}
-                        </div>
-                    </li>
-                </ul>
+            <div class="employee-card-wrapper">
+                <h3>{{ this.data.name }}</h3>
+                <div class="info">
+                    <ul class="info-list">
+                        <li class="info-row" v-for="(item, index) in info" :key="index">
+                            <div>
+                                <span :style="{backgroundImage: item.path}"></span>
+                                {{ item.data }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </router-link>
     </div>

@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-html, body {
+html, body, #app {
     height: 100%;
     margin: 0;
 }
@@ -29,7 +29,7 @@ a {
 }
 
 .delete-item {
-    background: #b9173c;
+    background: $danger;
     border-radius: $border-radius;
     @include textPlain;
     color: $white;
@@ -39,6 +39,24 @@ a {
     transition: all 200ms ease;
 
     &:hover {
-        background: #690a1f;
+        background: $danger--hover;
+    }
+}
+
+.submit-new-item {
+    border: none;
+    outline: none;
+    padding: 16px;
+    font-size: 1.2rem;
+    background: $brand;
+    color: #1D1D1D;
+    border-radius: $border-radius;
+    @include textHeader;
+    font-weight: 700;
+    width: 100%;
+    transition: 200ms ease all;
+
+    &:hover {
+        background: $brand__hover;
     }
 }

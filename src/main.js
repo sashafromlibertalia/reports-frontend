@@ -5,8 +5,8 @@ import router from './router/index'
 import store from './store/index'
 import axios from 'axios'
 import Unicon from 'vue-unicons/dist/vue-unicons-vue2.umd'
-import { uniPlusCircle, uniTimesCircle, uniArrowLeft } from 'vue-unicons/dist/icons'
-import { BootstrapVue } from 'bootstrap-vue'
+import {uniPlusCircle, uniTimesCircle, uniArrowLeft} from 'vue-unicons/dist/icons'
+import {BootstrapVue} from 'bootstrap-vue'
 import Toasted from 'vue-toasted';
 import moment from 'moment'
 
@@ -26,7 +26,7 @@ Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App),
+    router,
+    store,
+    render: h => h(App),
 }).$mount('#app')

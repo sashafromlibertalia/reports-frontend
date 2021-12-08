@@ -65,12 +65,13 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['profile']),
         ...mapGetters('tasks', ['allTasks']),
-        ...mapGetters('employees', ['allUsers']),
+        ...mapGetters('employees', ['allUsers', 'currentUser']),
     },
     methods: {
         ...mapActions('tasks', ['getAllTasks', 'createTask']),
-        ...mapActions('employees', ['getAllUsers']),
+        ...mapActions('employees', ['getAllUsers', 'getCurrentUser']),
         getKeyByValue(object, value) {
             return Object.keys(object).find(key => object[key] === value);
         },
@@ -82,14 +83,19 @@ export default {
             }
         },
         async handleCreateNewTask() {
-            await this.createTask(this.form).then(() => {
+            await this.createTask(this.form).then(async () => {
                 this.isCreatingTask = false
+                await this.$toasted.show('Задача добавлена', {
+                    duration : 5000
+                })
+                await this.getAllTasks()
             })
         },
     },
     async mounted() {
         await this.getAllTasks()
         await this.getAllUsers()
+        await this.getCurrentUser(this.profile)
         this.options = this.allUsers.map(item => {
             return {
                 text: item.name,

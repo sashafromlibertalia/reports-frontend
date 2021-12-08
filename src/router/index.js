@@ -9,9 +9,16 @@ import CreateEmployee from "@/views/actions/CreateEmployee";
 import TaskPage from "@/views/preview/TaskPage";
 import NotFound from "@/views/NotFound"
 import EmployeePage from "@/views/preview/EmployeePage";
+import Login from "@/views/Login";
+import helpers from "@/middlewares/helpers";
 
 Vue.use(VueRouter)
 const routes = [
+    {
+        path: '/',
+        name: 'Login',
+        component: Login
+    },
     {
         path: SidebarActions.TASKS.link,
         name: 'Tasks',
@@ -61,10 +68,18 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (!to.matched.length) {
+    if (!helpers.getUser()) {
+        if (to.path === '/')
+            next()
+        else
+            next('/')
+    } else if (!to.matched.length) {
         next('/404');
     } else {
-        next();
+        if (to.path === '/')
+            next('/tasks')
+        else
+            next()
     }
 })
 

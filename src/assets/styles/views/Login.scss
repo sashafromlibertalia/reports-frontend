@@ -1,0 +1,25 @@
+@import "src/assets/styles/base/common";
+@import "src/assets/styles/helpers/variables";
+@import "src/assets/styles/helpers/typography";
+@import "src/assets/styles/views/Tasks";
+
+.login {
+    padding: 5rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    &-select {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

@@ -14,12 +14,16 @@
                 </template>
             </div>
         </div>
+        <div class="log-out" @click="changeUser">
+            <span>Выйти из системы</span>
+        </div>
     </div>
 </template>
 
 <script>
 import SideBarItem from "@/components/sidebar/SideBarItem";
 import sidebarActions from "@/store/enums/sidebarActions"
+import {mapActions} from "vuex";
 
 export default {
     name: "TheSideBar",
@@ -34,7 +38,13 @@ export default {
         },
         create() {
             return [this.routes.NEW_EMPLOYEE, this.routes.NEW_REPORT]
-        },
+        }
+    },
+    methods: {
+        ...mapActions(['signOut']),
+        async changeUser() {
+            await this.signOut()
+        }
     },
     components: {
         SideBarItem

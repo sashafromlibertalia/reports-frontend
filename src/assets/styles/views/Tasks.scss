@@ -114,24 +114,6 @@ section:last-child {
     align-items: center;
     flex-direction: column;
     margin-top: 8rem;
-
-    .submit-new-item {
-        border: none;
-        outline: none;
-        padding: 16px;
-        font-size: 1.2rem;
-        background: $brand;
-        color: #1D1D1D;
-        border-radius: $border-radius;
-        @include textHeader;
-        font-weight: 700;
-        width: 100%;
-        transition: 200ms ease all;
-
-        &:hover {
-            background: $brand__hover;
-        }
-    }
 }
 
 

@@ -33,3 +33,28 @@
         margin-bottom: 3rem;
     }
 }
+
+.log-out {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    span {
+        @include textHeader;
+        font-weight: bold;
+        width: 50%;
+        border-radius: $border-radius;
+        color: $danger;
+        text-align: center;
+        transition: 200ms all ease;
+        cursor: pointer;
+        padding: 10px 8px;
+    }
+
+    &:hover {
+        span {
+            color: $white;
+            background: $danger;
+        }
+    }
+}

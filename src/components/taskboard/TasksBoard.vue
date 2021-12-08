@@ -3,7 +3,7 @@
         <section class="task-board-type">
             <div class="task-type-wrapper">
                 <h3>{{ this.status }}: {{ this.tasks.length }}</h3>
-                <unicon name="plus-circle" :fill="getFill(this.status)" @click="addTask(status);"/>
+                <unicon v-if="this.currentUser.role === roles.LEAD" name="plus-circle" :fill="getFill(this.status)" @click="addTask(status);"/>
             </div>
             <span class="underline" :style="{background: getFill(status)}"/>
         </section>
@@ -20,6 +20,7 @@ import TaskItem from "@/components/taskboard/TaskItem";
 import colors from "@/store/enums/colors";
 import taskStatuses from "@/store/enums/taskStatuses";
 import {mapActions, mapGetters} from "vuex";
+import roles from "@/store/enums/roles";
 
 export default {
     name: "TasksBoard",
@@ -32,10 +33,12 @@ export default {
     data() {
         return {
             colors: colors,
-            statuses: taskStatuses
+            statuses: taskStatuses,
+            roles: roles.roles,
         }
     },
     computed: {
+        ...mapGetters('employees', ['currentUser']),
         ...mapGetters('tasks', ['allTasks']),
         tasks() {
             switch (this.status) {
