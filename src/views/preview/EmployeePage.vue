@@ -24,21 +24,31 @@
                 </div>
                 <div class="task-content-section">
                     <h3>Число задач:</h3>
-                    <p>{{ this.currentUser.tasks }}</p>
+                    <p>{{ this.currentUser.tasks.length }}</p>
                 </div>
             </div>
         </div>
-        <button class="delete-item" type="button" @click="handleRemoveEmployee">Удалить сотрудника</button>
+        <button class="delete-item" type="button" @click="handleRemoveEmployee" v-if="this.profile.id !== this.currentUser.id && this.profile.role === roles.LEAD">Удалить сотрудника</button>
+        <div class="preview">
+            <h3>Список задач</h3>
+            <div class="employees-container">
+                <template v-for="(task, index) in this.currentUser.tasks">
+                    <TaskItem :key="index" :item="task"/>
+                </template>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 import {mapActions, mapGetters} from "vuex";
 import roles from "@/store/enums/roles"
+import TaskItem from "@/components/taskboard/TaskItem";
 
 
 export default {
     name: "EmployeePage",
+    components: {TaskItem},
     props: {
         id: {
             type: String,
@@ -51,6 +61,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(['profile']),
         ...mapGetters('employees', ['currentUser'])
     },
     methods: {
@@ -80,4 +91,5 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/styles/views/EmployeePage";
+@import "src/assets/styles/views/MyEmployees";
 </style>

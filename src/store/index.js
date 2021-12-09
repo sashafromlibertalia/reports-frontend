@@ -44,6 +44,10 @@ export default new Vuex.Store({
             const token = helpers.getUser()
             await api.get(`employees/${token}`).then(({data}) => {
                 commit('REFRESH_AUTH', data)
+            }).catch(async () => {
+                await helpers.removeUser()
+                await commit('LOGOUT')
+                await router.push('/')
             })
         },
         async signOut({commit}) {

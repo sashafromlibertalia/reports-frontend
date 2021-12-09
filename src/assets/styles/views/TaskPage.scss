@@ -50,20 +50,3 @@
         margin: 0;
     }
 }
-
-
-.preview {
-    margin-top: 5rem;
-
-    h3 {
-        @include textHeader;
-        color: $white;
-    }
-
-    .history {
-        display: flex;
-        justify-content: space-between;
-        flex-direction: column;
-        margin-top: 4rem;
-    }
-}

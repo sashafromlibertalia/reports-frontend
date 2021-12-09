@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'tasks/' + this.item.id">
+    <router-link :to="{name: 'TaskPage', params: {id: this.item.id}}">
         <div class="task-item">
             <div class="task-item-body">
                 <h3>{{ this.item.name }}</h3>
@@ -33,7 +33,7 @@ export default {
                 return 'Нет описания'
             }
         }
-    }
+    },
 }
 </script>
 

@@ -95,7 +95,7 @@ export default {
     async mounted() {
         await this.getAllTasks()
         await this.getAllUsers()
-        await this.setCurrentUser(this.profile)
+        await this.setCurrentUser(this.profile.id)
         this.options = this.allUsers.map(item => {
             return {
                 text: item.name,
