@@ -2,7 +2,7 @@
     <div>
         <h1 class="page-title">Мои сотрудники</h1>
         <div class="employees-container" v-if="this.allUsers.length >0">
-            <template v-for="(user, index) in this.allUsers">
+            <template v-for="(user, index) in this.allUsers.filter(item => item.id !== this.profile.id)">
                 <EmployeeCard :data="user" :key="index"/>
             </template>
         </div>
@@ -18,6 +18,7 @@ import EmployeeCard from "@/components/EmployeeCard";
 export default {
     name: "MyEmployees",
     computed: {
+        ...mapGetters(['profile']),
         ...mapGetters('employees', ['allUsers']),
     },
     methods: {

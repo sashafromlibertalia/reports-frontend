@@ -7,7 +7,8 @@
             </div>
             <div class="task-status">
                 <span :style="{background: getStatusColor(this.currentTask.status)}"></span>
-                <b-form-select class="bg-dark text-white" v-model="selected" :options="options" @change="handleChangeStatus"></b-form-select>
+                <b-form-select class="bg-dark text-white" v-model="selected" :options="options"
+                               @change="handleChangeStatus"></b-form-select>
             </div>
         </div>
         <div style="display: flex; flex-direction: row; justify-content: flex-start">
@@ -18,7 +19,7 @@
                 </div>
                 <div class="task-content-section">
                     <h3>Исполняющий задачу:</h3>
-                    <router-link :to="'/employees/' + this.currentTask.employeeId">{{ this.currentTask.employeeId }}</router-link>
+                    <router-link :to="'/employees/' + this.currentTask.employeeId">{{this.currentTask.employeeId }}</router-link>
                 </div>
             </div>
             <div class="task-content-column">
@@ -45,12 +46,22 @@
                         v-model="comment"
                         style="border: none;"
                         max-rows="8"></b-form-textarea>
-                    <div v-if="comment !== null && comment.length > 0" style="display: flex; justify-content: space-between; width: 16rem">
-                        <button type="submit" class="submit-new-item" style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px">Сохранить</button>
-                        <button type="submit" class="cancel" style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px" @click="comment = null">Отмена</button>
+                    <div v-if="comment !== null && comment.length > 0"
+                         style="display: flex; justify-content: space-between; width: 16rem">
+                        <button type="submit" class="submit-new-item"
+                                style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px">
+                            Сохранить
+                        </button>
+                        <button type="submit" class="cancel"
+                                style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px"
+                                @click="comment = null">Отмена
+                        </button>
                     </div>
                 </b-col>
             </b-row>
+            <div class="history">
+                <HistoryItem :time="this.currentTask.createdAt"/>
+            </div>
         </div>
     </div>
 </template>
@@ -59,6 +70,7 @@
 import {mapActions, mapGetters} from "vuex";
 import taskStatuses from "@/store/enums/taskStatuses";
 import colors from "@/store/enums/colors";
+import HistoryItem from "@/components/HistoryItem";
 
 export default {
     name: "TaskPage",
@@ -101,12 +113,12 @@ export default {
         async handleRemoveTask() {
             if (await this.removeTask(this.id)) {
                 this.$toasted.show('Задача была удалена', {
-                    duration : 5000
+                    duration: 5000
                 })
                 this.handleBack()
             } else {
                 this.$toasted.show('Задача не была удалена', {
-                    duration : 5000
+                    duration: 5000
                 })
                 this.handleBack()
             }
@@ -121,7 +133,8 @@ export default {
     async mounted() {
         await this.getSingleTask(this.id)
         this.selected = this.currentTask.status
-    }
+    },
+    components: {HistoryItem}
 }
 </script>
 

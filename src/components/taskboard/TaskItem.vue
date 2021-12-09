@@ -6,7 +6,7 @@
                 <p>{{ description }}</p>
             </div>
             <div class="task-item-footer">
-                2 комментария
+                2 комментари
             </div>
         </div>
     </router-link>

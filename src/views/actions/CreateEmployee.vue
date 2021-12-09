@@ -25,7 +25,7 @@ export default {
             form: {
                 name: null,
                 age: null,
-                role: roles.WORKER
+                role: roles.roles.WORKER
             }
         }
     },

@@ -30,9 +30,9 @@ export default {
         placeholder() {
             switch (this.type) {
                 case inputs.NAME:
-                    return 'Александр Мирошниченко'
+                    return 'Александр Мирошниченко из М3201'
                 case inputs.AGE:
-                    return '100 баллов ООП'
+                    return 'Хочет 100 баллов по ООП'
                 default:
                     return 'Введите значение...'
             }

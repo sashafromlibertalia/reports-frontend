@@ -38,7 +38,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('employees', ['currentUser']),
         ...mapGetters('tasks', ['allTasks']),
         tasks() {
             switch (this.status) {

@@ -22,6 +22,11 @@ html, body, #app {
 
 a {
     text-decoration: none !important;
+    transition: all 200ms ease;
+
+    &:hover {
+        color: gray !important;
+    }
 }
 
 .unicon {

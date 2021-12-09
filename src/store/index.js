@@ -5,6 +5,7 @@ import helpers from "@/middlewares/helpers";
 import tasks from './modules/tasks'
 import employees from "@/store/modules/employees";
 
+import api from "@/middlewares/api";
 import router from '@/router/index'
 
 Vue.use(Vuex)
@@ -23,30 +24,31 @@ export default new Vuex.Store({
             state.isAuthenticated = false
         },
         REFRESH_AUTH(state, payload) {
-            state.isAuthenticated = payload.token !== null
-            state.profile = payload.token
+            state.isAuthenticated = payload !== null
+            state.profile = payload
         },
     },
     actions: {
-        async signIn({commit, dispatch}, payload) {
+        async signIn({commit}, payload) {
             try {
                 await helpers.handleUser(payload)
-                await dispatch('employees/setCurrentUser', payload)
-                await commit('AUTH_SUCCESS', payload)
+                await api.get(`employees/${payload}`).then(({data}) => {
+                    commit('AUTH_SUCCESS', data)
+                })
                 await router.push('/tasks')
             } catch (e) {
                 console.log(e)
             }
         },
-        async refreshAuth({ commit, dispatch }) {
+        async refreshAuth({commit}) {
             const token = helpers.getUser()
-            await dispatch('employees/setCurrentUser', token)
-            await commit('REFRESH_AUTH', { token })
+            await api.get(`employees/${token}`).then(({data}) => {
+                commit('REFRESH_AUTH', data)
+            })
         },
         async signOut({commit}) {
             try {
                 await helpers.removeUser()
-                await commit('employees/RESET_CURRENT_USER')
                 await commit('LOGOUT')
                 await router.push('/')
             } catch (e) {

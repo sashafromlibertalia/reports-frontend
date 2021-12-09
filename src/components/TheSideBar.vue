@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="sidebar-section">
-           <span class="cur-user">{{this.currentUser.name}} 😍</span>
+           <span class="cur-user">{{this.profile.name}} 😍</span>
         </div>
     </div>
 </template>
@@ -40,7 +40,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('employees', ['currentUser']),
+        ...mapGetters(['profile']),
         explore() {
             return [this.routes.TASKS, this.routes.SPRINTS, this.routes.MY_EMPLOYEES]
         },
@@ -54,7 +54,7 @@ export default {
             await this.signOut()
         },
         isDisplaying(item) {
-            if ([this.roles.MANAGER, this.roles.LEAD].includes(this.currentUser.role))
+            if ([this.roles.MANAGER, this.roles.LEAD].includes(this.profile.role))
                 return true
             else
                 return item.isAll

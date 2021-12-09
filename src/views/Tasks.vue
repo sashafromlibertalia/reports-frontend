@@ -9,8 +9,8 @@
             </template>
             <template style="align-items: center" v-else>
                 <EmptyData/>
-                <section style="margin: 0; width: 30%">
-                    <button type="submit" class="submit-new-item" @click="openForm(statuses.WAITING)">Добавить</button>
+                <section style="margin-top: 10rem; width: 30%">
+                    <button type="submit" class="submit-new-item" @click="openForm(statuses.WAITING)">Добавить задачу</button>
                 </section>
             </template>
         </div>

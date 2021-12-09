@@ -1,0 +1,38 @@
+@import "src/assets/styles/base/common";
+@import "src/assets/styles/helpers/variables";
+@import "src/assets/styles/helpers/typography";
+
+.history-item {
+    width: 80%;
+    margin-bottom: 1.5rem;
+
+    &-container {
+        border-left: 4px solid $brand;
+    }
+
+    & .wrapper {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        width: 25%;
+        margin-left: 1rem;
+        h4 {
+            @include textHeader;
+            color: gray;
+            font-size: 1rem;
+        }
+
+        span {
+            @include textPlain;
+            color: gray;
+        }
+    }
+
+    &-data {
+        margin-left: 1rem;
+        @include textPlain;
+        color: $white;
+        margin-top: 0.25rem;
+        font-size: 1.3rem;
+    }
+}
