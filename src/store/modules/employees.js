@@ -11,6 +11,9 @@ const mutations = {
     },
     SET_CURRENT_USER(state, payload) {
         state.currentUser = payload
+    },
+    RESET_CURRENT_USER(state) {
+        state.currentUser = null
     }
 }
 
@@ -23,7 +26,7 @@ const actions = {
             console.log(e)
         }
     },
-    async getCurrentUser({commit}, payload) {
+    async setCurrentUser({commit}, payload) {
         try {
             const {data} = await api.get(`employees/${payload}`)
             commit('SET_CURRENT_USER', data)

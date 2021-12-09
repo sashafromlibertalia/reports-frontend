@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         ...mapActions(['signIn']),
-        ...mapActions('employees', ['getAllUsers', 'getCurrentUser']),
+        ...mapActions('employees', ['getAllUsers', 'setCurrentUser']),
         async handleSignIn() {
             if (this.selected)
                 await this.signIn(this.selected)
@@ -39,7 +39,7 @@ export default {
     },
     async mounted() {
         await this.getAllUsers()
-        this.options = this.allUsers.map(item => {
+        this.options = await this.allUsers.map(item => {
             return {
                 text: `(${roles.roleParser[item.role]}) ${item.name}`,
                 value: item.id

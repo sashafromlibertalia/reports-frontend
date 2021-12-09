@@ -31,6 +31,16 @@
 
     &-section {
         margin-bottom: 3rem;
+
+        .cur-user {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+            text-align: center;
+            @include textPlain;
+            color: $white;
+        }
     }
 }
 

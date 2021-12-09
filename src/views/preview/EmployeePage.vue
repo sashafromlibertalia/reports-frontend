@@ -54,7 +54,7 @@ export default {
         ...mapGetters('employees', ['currentUser'])
     },
     methods: {
-        ...mapActions('employees', ['getCurrentUser', 'removeUser']),
+        ...mapActions('employees', ['setCurrentUser', 'removeUser']),
         async handleRemoveEmployee() {
             if (await this.removeUser(this.id)) {
                 this.$toasted.show('Сотрудник был удален', {
@@ -73,7 +73,7 @@ export default {
         }
     },
     async mounted() {
-        await this.getCurrentUser(this.id)
+        await this.setCurrentUser(this.id)
     }
 }
 </script>

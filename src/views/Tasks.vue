@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         ...mapActions('tasks', ['getAllTasks', 'createTask']),
-        ...mapActions('employees', ['getAllUsers', 'getCurrentUser']),
+        ...mapActions('employees', ['getAllUsers', 'setCurrentUser']),
         getKeyByValue(object, value) {
             return Object.keys(object).find(key => object[key] === value);
         },
@@ -95,7 +95,7 @@ export default {
     async mounted() {
         await this.getAllTasks()
         await this.getAllUsers()
-        await this.getCurrentUser(this.profile)
+        await this.setCurrentUser(this.profile)
         this.options = this.allUsers.map(item => {
             return {
                 text: item.name,

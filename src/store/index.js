@@ -15,7 +15,7 @@ export default new Vuex.Store({
     },
     mutations: {
         AUTH_SUCCESS(state, payload) {
-            state.profile = payload.id
+            state.profile = payload
             state.isAuthenticated = true
         },
         LOGOUT(state) {
@@ -30,9 +30,9 @@ export default new Vuex.Store({
     actions: {
         async signIn({commit, dispatch}, payload) {
             try {
-                helpers.handleUser(payload)
-                dispatch('employees/getCurrentUser', payload)
-                commit('AUTH_SUCCESS', this.getters["employees/currentUser"])
+                await helpers.handleUser(payload)
+                await dispatch('employees/setCurrentUser', payload)
+                await commit('AUTH_SUCCESS', payload)
                 await router.push('/tasks')
             } catch (e) {
                 console.log(e)
@@ -40,12 +40,13 @@ export default new Vuex.Store({
         },
         async refreshAuth({ commit }) {
             const token = helpers.getUser()
-            commit('REFRESH_AUTH', { token })
+            await commit('REFRESH_AUTH', { token })
         },
         async signOut({commit}) {
             try {
-                helpers.removeUser()
-                commit('LOGOUT')
+                await helpers.removeUser()
+                await commit('employees/RESET_CURRENT_USER')
+                await commit('LOGOUT')
                 await router.push('/')
             } catch (e) {
                 console.log(e)
