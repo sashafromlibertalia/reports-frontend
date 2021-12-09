@@ -1,21 +1,23 @@
 <template>
-    <div class="sidebar">
-        <div class="sidebar-wrapper">
-            <div class="sidebar-section">
-                <h4>ПРОСМОТР</h4>
-                <template v-for="(item, index) in explore">
-                    <SideBarItem v-if="isDisplaying(item)"  :name="item.name" :icon="item.icon" :link="item.link" :key="index"/>
-                </template>
+    <div class="sidebar" style="display: flex; flex-direction: column; justify-content: space-between">
+        <div>
+            <div class="sidebar-wrapper">
+                <div class="sidebar-section">
+                    <h4>ПРОСМОТР</h4>
+                    <template v-for="(item, index) in explore">
+                        <SideBarItem v-if="isDisplaying(item)"  :name="item.name" :icon="item.icon" :link="item.link" :key="index"/>
+                    </template>
+                </div>
+                <div class="sidebar-section">
+                    <h4>ДЕЙСТВИЯ</h4>
+                    <template v-for="(item, index) in create">
+                        <SideBarItem v-if="isDisplaying(item)" :name="item.name" :icon="item.icon" :link="item.link" :key="index"/>
+                    </template>
+                </div>
             </div>
-            <div class="sidebar-section">
-                <h4>ДЕЙСТВИЯ</h4>
-                <template v-for="(item, index) in create">
-                    <SideBarItem v-if="isDisplaying(item)" :name="item.name" :icon="item.icon" :link="item.link" :key="index"/>
-                </template>
+            <div class="log-out" @click="changeUser">
+                <span>Выйти из системы</span>
             </div>
-        </div>
-        <div class="log-out" @click="changeUser">
-            <span>Выйти из системы</span>
         </div>
         <div class="sidebar-section">
            <span class="cur-user">{{this.currentUser.name}} 😍</span>

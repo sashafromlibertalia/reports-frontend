@@ -60,3 +60,16 @@ a {
         background: $brand__hover;
     }
 }
+
+
+.cancel {
+    color: dimgray;
+    background: none;
+    border-radius: $border-radius;
+    @include textHeader;
+    transition: 200ms ease all;
+
+    &:hover {
+        background: #121111;
+    }
+}

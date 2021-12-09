@@ -26,22 +26,12 @@
             color: $white;
         }
 
-        p {
+        p, span {
             @include textPlain;
             margin: 8px 0 0 0;
             font-size: 1rem;
             color: $gray;
             text-decoration: none;
-        }
-
-        span {
-            width: 1.8rem;
-            height: 1.8rem;
-            margin: 10px 0 0 0;
-            border-radius: 50%;
-            display: block;
-            background: url("https://crocus-hall.ru.com/store/a/2f/o_prev_4233_1574412414.jpg") no-repeat no-repeat;
-            background-size: contain;
         }
     }
 

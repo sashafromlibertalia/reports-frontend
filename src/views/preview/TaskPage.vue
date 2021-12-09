@@ -33,6 +33,25 @@
             </div>
         </div>
         <button class="delete-item" type="button" @click="handleRemoveTask">Удалить задачу</button>
+        <div class="preview">
+            <h3>История</h3>
+            <b-row class="mt-2">
+                <b-col sm="10">
+                    <b-form-textarea
+                        id="textarea-default"
+                        class="bg-dark text-white"
+                        placeholder="Добавить комментарий"
+                        rows="1"
+                        v-model="comment"
+                        style="border: none;"
+                        max-rows="8"></b-form-textarea>
+                    <div v-if="comment !== null && comment.length > 0" style="display: flex; justify-content: space-between; width: 16rem">
+                        <button type="submit" class="submit-new-item" style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px">Сохранить</button>
+                        <button type="submit" class="cancel" style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px" @click="comment = null">Отмена</button>
+                    </div>
+                </b-col>
+            </b-row>
+        </div>
     </div>
 </template>
 
@@ -49,7 +68,8 @@ export default {
     data() {
         return {
             selected: null,
-            options: Object.entries(taskStatuses).map(([value, text]) => ({value, text}))
+            options: Object.entries(taskStatuses).map(([value, text]) => ({value, text})),
+            comment: null
         }
     },
     computed: {
@@ -90,6 +110,9 @@ export default {
                 })
                 this.handleBack()
             }
+        },
+        async saveComment(e) {
+            this.comment = e
         },
         handleBack() {
             this.$router.go(-1)

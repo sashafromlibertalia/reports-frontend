@@ -4,7 +4,6 @@
             <div class="task-item-body">
                 <h3>{{ this.item.name }}</h3>
                 <p>{{ description }}</p>
-                <span></span>
             </div>
             <div class="task-item-footer">
                 2 комментария

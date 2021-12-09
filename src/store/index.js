@@ -38,8 +38,9 @@ export default new Vuex.Store({
                 console.log(e)
             }
         },
-        async refreshAuth({ commit }) {
+        async refreshAuth({ commit, dispatch }) {
             const token = helpers.getUser()
+            await dispatch('employees/setCurrentUser', token)
             await commit('REFRESH_AUTH', { token })
         },
         async signOut({commit}) {

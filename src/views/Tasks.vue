@@ -31,7 +31,7 @@
                     </div>
                     <div class="creation-item">
                         <h3>Исполнитель</h3>
-                        <b-form-select style="width: 100%" class="bg-dark text-white" :options="options" v-model="form.employeeId"></b-form-select>
+                        <b-form-select style="width: 100%; padding: 8px 16px; border: none" class="bg-dark text-white" :options="options" v-model="form.employeeId"></b-form-select>
                     </div>
                 </section>
                 <section>

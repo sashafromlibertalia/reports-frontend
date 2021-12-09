@@ -50,3 +50,13 @@
         margin: 0;
     }
 }
+
+
+.preview {
+    margin-top: 5rem;
+
+    h3 {
+        @include textHeader;
+        color: $white;
+    }
+}

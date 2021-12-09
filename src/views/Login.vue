@@ -2,7 +2,7 @@
     <div class="login">
         <h1 class="page-title" style="text-align: center">Выбери, за кого нужно авторизоваться 😘</h1>
         <div class="login-select">
-            <b-form-select size="lg" class="bg-dark text-white" v-model="selected" :options="options"></b-form-select>
+            <b-form-select style="border: none; padding: 8px 12px" size="lg" class="bg-dark text-white" v-model="selected" :options="options"></b-form-select>
         </div>
         <div class="login-wrapper">
             <button type="submit" style="width: 30%;" class="submit-new-item" @click="handleSignIn">Войти</button>
