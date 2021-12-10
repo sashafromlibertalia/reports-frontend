@@ -6,7 +6,7 @@
                 <p>{{ description }}</p>
             </div>
             <div class="task-item-footer">
-                2 комментари
+                {{commentAmount}}
             </div>
         </div>
     </router-link>
@@ -32,8 +32,17 @@ export default {
             } else {
                 return 'Нет описания'
             }
+        },
+        commentAmount() {
+            return this.getCommentValue(this.item.comments.length)
         }
     },
+    methods: {
+        getCommentValue(number) {
+            const words = ['комментарий', 'комментария', 'комментариев']
+            return number + ' ' + words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
+        }
+    }
 }
 </script>
 

@@ -2,11 +2,11 @@
     <div class="history-item">
         <div class="history-item-container">
             <div class="wrapper">
-                <h4>Событие</h4>
+                <h4>{{ author }}</h4>
                 <span class="history-item-date">{{ eventDate }}</span>
             </div>
             <p class="history-item-data">
-                Задача создана
+                {{ this.item.message }}
             </p>
         </div>
     </div>
@@ -14,18 +14,25 @@
 
 <script>
 import moment from "moment";
+import {mapGetters} from "vuex";
+
 export default {
     name: "HistoryItem",
     props: {
-        time: String,
+        item: Object,
+    },
+    computed: {
+        ...mapGetters('employees', ['allUsers'])
     },
     data() {
         return {
-            eventDate: null
+            eventDate: null,
+            author: null
         }
     },
-    mounted() {
-        this.eventDate = moment(this.time).format("D MMMM YYYY, HH:mm")
+    async mounted() {
+        this.eventDate = moment(this.item.createdAt).format("D MMMM YYYY, HH:mm:ss")
+        this.author = this.allUsers.filter(item => item.id === this.item.author)[0].name
     }
 }
 </script>

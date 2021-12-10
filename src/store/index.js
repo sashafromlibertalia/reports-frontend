@@ -4,6 +4,7 @@ import helpers from "@/middlewares/helpers";
 
 import tasks from './modules/tasks'
 import employees from "@/store/modules/employees";
+import comments from "@/store/modules/comments";
 
 import api from "@/middlewares/api";
 import router from '@/router/index'
@@ -31,8 +32,8 @@ export default new Vuex.Store({
     actions: {
         async signIn({commit}, payload) {
             try {
-                await helpers.handleUser(payload)
-                await api.get(`employees/${payload}`).then(({data}) => {
+                helpers.handleUser(payload)
+                api.get(`employees/${payload}`).then(({data}) => {
                     commit('AUTH_SUCCESS', data)
                 })
                 await router.push('/tasks')
@@ -45,15 +46,15 @@ export default new Vuex.Store({
             await api.get(`employees/${token}`).then(({data}) => {
                 commit('REFRESH_AUTH', data)
             }).catch(async () => {
-                await helpers.removeUser()
-                await commit('LOGOUT')
+                helpers.removeUser()
+                commit('LOGOUT')
                 await router.push('/')
             })
         },
         async signOut({commit}) {
             try {
-                await helpers.removeUser()
-                await commit('LOGOUT')
+                helpers.removeUser()
+                commit('LOGOUT')
                 await router.push('/')
             } catch (e) {
                 console.log(e)
@@ -66,6 +67,7 @@ export default new Vuex.Store({
     },
     modules: {
         tasks,
-        employees
+        employees,
+        comments
     }
 })

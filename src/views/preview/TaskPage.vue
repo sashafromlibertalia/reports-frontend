@@ -19,7 +19,7 @@
                 </div>
                 <div class="task-content-section">
                     <h3>Исполняющий задачу:</h3>
-                    <router-link :to="'/employees/' + this.currentTask.employeeId">{{this.currentTask.employeeId }}</router-link>
+                    <router-link :to="'/employees/' + this.currentTask.employeeId">{{ assigned }}</router-link>
                 </div>
             </div>
             <div class="task-content-column">
@@ -43,24 +43,24 @@
                         class="bg-dark text-white"
                         placeholder="Добавить комментарий"
                         rows="1"
-                        v-model="comment"
+                        v-model="form.body.message"
                         style="border: none;"
                         max-rows="8"></b-form-textarea>
-                    <div v-if="comment !== null && comment.length > 0"
+                    <div v-if="form.body.message !== null && form.body.message.length > 0"
                          style="display: flex; justify-content: space-between; width: 16rem">
                         <button type="submit" class="submit-new-item"
-                                style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px">
-                            Сохранить
-                        </button>
+                                style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px"
+                                @click="handleSaveComment">Сохранить</button>
                         <button type="submit" class="cancel"
                                 style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px"
-                                @click="comment = null">Отмена
-                        </button>
+                                @click="form.body.message = null">Отмена</button>
                     </div>
                 </b-col>
             </b-row>
             <div class="history">
-                <HistoryItem :time="this.currentTask.createdAt"/>
+                <template v-for="(item, index) in this.currentTask.comments" style="display: flex; justify-content: flex-end">
+                    <HistoryItem :item="item" :key="index"/>
+                </template>
             </div>
         </div>
     </div>
@@ -81,16 +81,29 @@ export default {
         return {
             selected: null,
             options: Object.entries(taskStatuses).map(([value, text]) => ({value, text})),
-            comment: null
+            comment: null,
+            form: {
+                body: {
+                    message: null,
+                    author: null,
+                },
+                id: null
+            },
+            assigned: null
         }
     },
     computed: {
+        ...mapGetters(['profile']),
+        ...mapGetters('employees', ['allUsers']),
         ...mapGetters('tasks', ['currentTask']),
+        ...mapGetters('comments', ['currentComments']),
         creationDate() {
             return this.moment(this.currentTask.createdAt).format("DD/MM/YYYY")
         }
     },
     methods: {
+        ...mapActions('employees', ['getAllUsers']),
+        ...mapActions('comments', ['saveComment', 'getCommentsForTask']),
         ...mapActions('tasks', ['getSingleTask', 'updateTask', 'removeTask']),
         getStatusColor(status) {
             switch (taskStatuses[status]) {
@@ -123,16 +136,24 @@ export default {
                 this.handleBack()
             }
         },
-        async saveComment(e) {
-            this.comment = e
+        async handleSaveComment() {
+            await this.saveComment(this.form).then(async () => {
+                await this.getSingleTask(this.id)
+                this.form.body.message = null
+            })
         },
         handleBack() {
             this.$router.go(-1)
         }
     },
     async mounted() {
+        await this.getAllUsers()
         await this.getSingleTask(this.id)
         this.selected = this.currentTask.status
+        this.assigned = this.allUsers.filter(item => item.id === this.currentTask.employeeId)[0].name
+
+        this.form.body.author = this.profile.id
+        this.form.id = this.id
     },
     components: {HistoryItem}
 }
