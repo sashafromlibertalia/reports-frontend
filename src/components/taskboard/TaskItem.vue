@@ -6,6 +6,7 @@
                 <p>{{ description }}</p>
             </div>
             <div class="task-item-footer">
+                <span :style="{backgroundImage:  `url(${require(`/src/assets/icons/comment.svg`)})`}"></span>
                 {{commentAmount}}
             </div>
         </div>

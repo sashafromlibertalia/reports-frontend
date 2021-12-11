@@ -28,7 +28,17 @@
                 </div>
             </div>
         </div>
-        <button class="delete-item" type="button" @click="handleRemoveEmployee" v-if="this.profile.id !== this.currentUser.id && this.profile.role === roles.LEAD">Удалить сотрудника</button>
+        <button class="delete-item" type="button" @click="handleRemoveEmployee"
+                v-if="this.profile.id !== this.currentUser.id && this.profile.role === roles.LEAD">Удалить сотрудника
+        </button>
+        <div class="preview" v-if="[roleEnum.MANAGER, roleEnum.LEAD].includes(this.currentUser.role)">
+            <h3>Подчиненные</h3>
+            <div class="employees-container">
+                <template v-for="(user, index) in this.staff">
+                    <EmployeeCard :data="user" :key="index"/>
+                </template>
+            </div>
+        </div>
         <div class="preview">
             <h3>Список задач</h3>
             <div class="employees-container">
@@ -44,11 +54,10 @@
 import {mapActions, mapGetters} from "vuex";
 import roles from "@/store/enums/roles"
 import TaskItem from "@/components/taskboard/TaskItem";
-
+import EmployeeCard from "@/components/EmployeeCard";
 
 export default {
     name: "EmployeePage",
-    components: {TaskItem},
     props: {
         id: {
             type: String,
@@ -57,24 +66,25 @@ export default {
     },
     data() {
         return {
+            roleEnum: roles.roles,
             roles: roles.roleParser
         }
     },
     computed: {
         ...mapGetters(['profile']),
-        ...mapGetters('employees', ['currentUser'])
+        ...mapGetters('employees', ['currentUser', 'staff'])
     },
     methods: {
-        ...mapActions('employees', ['setCurrentUser', 'removeUser']),
+        ...mapActions('employees', ['setCurrentUser', 'removeUser', 'getStaffOfUser']),
         async handleRemoveEmployee() {
             if (await this.removeUser(this.id)) {
                 this.$toasted.show('Сотрудник был удален', {
-                    duration : 5000
+                    duration: 5000
                 })
                 this.handleBack()
             } else {
                 this.$toasted.show('Сотрудник не был удален', {
-                    duration : 5000
+                    duration: 5000
                 })
                 this.handleBack()
             }
@@ -85,7 +95,12 @@ export default {
     },
     async mounted() {
         await this.setCurrentUser(this.id)
-    }
+        await this.getStaffOfUser(this.id)
+    },
+    components: {
+        EmployeeCard,
+        TaskItem
+    },
 }
 </script>
 

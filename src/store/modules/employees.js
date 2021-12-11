@@ -3,6 +3,7 @@ import api from '@/middlewares/api'
 const state = {
     allUsers: null,
     currentUser: null,
+    staff: null,
 }
 
 const mutations = {
@@ -14,6 +15,9 @@ const mutations = {
     },
     RESET_CURRENT_USER(state) {
         state.currentUser = null
+    },
+    SET_STAFF_MEMBERS(state, payload) {
+        state.staff = payload
     }
 }
 
@@ -49,12 +53,21 @@ const actions = {
         } catch (e) {
             console.log(e)
         }
+    },
+    async getStaffOfUser({commit}, payload) {
+        try {
+            const {data} = await api.get(`employees/staff/${payload}`)
+            commit('SET_STAFF_MEMBERS', data)
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 
 const getters = {
     allUsers: state => state.allUsers,
-    currentUser: state => state.currentUser
+    currentUser: state => state.currentUser,
+    staff: state => state.staff,
 }
 
 export default {

@@ -58,7 +58,7 @@
                 </b-col>
             </b-row>
             <div class="history">
-                <template v-for="(item, index) in this.currentTask.comments" style="display: flex; justify-content: flex-end">
+                <template v-for="(item, index) in comments" style="display: flex; justify-content: flex-end">
                     <HistoryItem :item="item" :key="index"/>
                 </template>
             </div>
@@ -82,6 +82,7 @@ export default {
             selected: null,
             options: Object.entries(taskStatuses).map(([value, text]) => ({value, text})),
             comment: null,
+            comments: null,
             form: {
                 body: {
                     message: null,
@@ -99,7 +100,7 @@ export default {
         ...mapGetters('comments', ['currentComments']),
         creationDate() {
             return this.moment(this.currentTask.createdAt).format("DD/MM/YYYY")
-        }
+        },
     },
     methods: {
         ...mapActions('employees', ['getAllUsers']),
@@ -140,6 +141,9 @@ export default {
             await this.saveComment(this.form).then(async () => {
                 await this.getSingleTask(this.id)
                 this.form.body.message = null
+                this.comments = this.currentTask.comments.sort((a, b) => {
+                    return new Date(a.createdAt) - new Date(b.createdAt);
+                }).reverse()
             })
         },
         handleBack() {
@@ -154,6 +158,9 @@ export default {
 
         this.form.body.author = this.profile.id
         this.form.id = this.id
+        this.comments = this.currentTask.comments.sort((a, b) => {
+            return new Date(a.createdAt) - new Date(b.createdAt);
+        }).reverse()
     },
     components: {HistoryItem}
 }

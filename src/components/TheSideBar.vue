@@ -42,7 +42,7 @@ export default {
     computed: {
         ...mapGetters(['profile']),
         explore() {
-            return [this.routes.TASKS, this.routes.SPRINTS, this.routes.MY_EMPLOYEES]
+            return [this.routes.TASKS, this.routes.SPRINTS, this.routes.ALL_EMPLOYEES, this.routes.MY_EMPLOYEES]
         },
         create() {
             return [this.routes.NEW_EMPLOYEE, this.routes.NEW_REPORT]

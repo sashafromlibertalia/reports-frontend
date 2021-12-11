@@ -6,10 +6,16 @@ const routes = Object.freeze({
         link: "/tasks",
         isAll: true
     },
+    ALL_EMPLOYEES: {
+        name: "Все сотрудники",
+        icon: "all-employees.svg",
+        link: "/employees",
+        isAll: true
+    },
     MY_EMPLOYEES: {
         name: "Мои сотрудники",
         icon: "employees.svg",
-        link: "/employees",
+        link: "/my-employees",
         isAll: false
     },
     SPRINTS: {

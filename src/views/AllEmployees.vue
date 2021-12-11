@@ -1,8 +1,8 @@
 <template>
     <div>
-        <h1 class="page-title">Мои сотрудники</h1>
-        <div class="employees-container" v-if="this.staff.length > 0">
-            <template v-for="(user, index) in this.staff">
+        <h1 class="page-title">Все сотрудники</h1>
+        <div class="employees-container" v-if="this.allUsers.length > 0">
+            <template v-for="(user, index) in this.allUsers">
                 <EmployeeCard :data="user" :key="index"/>
             </template>
         </div>
@@ -16,16 +16,16 @@ import EmptyData from "@/views/EmptyData";
 import EmployeeCard from "@/components/EmployeeCard";
 
 export default {
-    name: "MyEmployees",
+    name: "AllEmployees",
     computed: {
         ...mapGetters(['profile']),
-        ...mapGetters('employees', ['staff']),
+        ...mapGetters('employees', ['allUsers']),
     },
     methods: {
-        ...mapActions('employees', ['getStaffOfUser'])
+        ...mapActions('employees', ['getAllUsers'])
     },
     async mounted() {
-        await this.getStaffOfUser(this.profile.id)
+        await this.getAllUsers()
     },
     components: {
         EmployeeCard,

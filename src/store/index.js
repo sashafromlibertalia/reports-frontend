@@ -43,13 +43,15 @@ export default new Vuex.Store({
         },
         async refreshAuth({commit}) {
             const token = helpers.getUser()
-            await api.get(`employees/${token}`).then(({data}) => {
-                commit('REFRESH_AUTH', data)
-            }).catch(async () => {
-                helpers.removeUser()
-                commit('LOGOUT')
-                await router.push('/')
-            })
+            if (token !== null) {
+                await api.get(`employees/${token}`).then(({data}) => {
+                    commit('REFRESH_AUTH', data)
+                }).catch(async () => {
+                    helpers.removeUser()
+                    commit('LOGOUT')
+                    await router.push('/')
+                })
+            }
         },
         async signOut({commit}) {
             try {

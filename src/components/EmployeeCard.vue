@@ -5,10 +5,22 @@
                 <h3>{{ this.data.name }}</h3>
                 <div class="info">
                     <ul class="info-list">
-                        <li class="info-row" v-for="(item, index) in info" :key="index">
+                        <li class="info-row">
                             <div>
-                                <span :style="{backgroundImage: item.path}"></span>
-                                {{ item.data }}
+                                <span :style="{backgroundImage:  `url(${require(`/src/assets/icons/age.svg`)})`}"></span>
+                                Возраст: {{ this.data.age }}
+                            </div>
+                        </li>
+                        <li class="info-row">
+                            <div>
+                                <span :style="{backgroundImage:  `url(${require(`/src/assets/icons/role.svg`)})`}"></span>
+                                Роль: {{ roles[this.data.role] }}
+                            </div>
+                        </li>
+                        <li class="info-row">
+                            <div>
+                                <span :style="{backgroundImage:  `url(${require(`/src/assets/icons/todo.svg`)})`}"></span>
+                                Число задач: {{ this.data.tasks.length }}
                             </div>
                         </li>
                     </ul>
@@ -19,6 +31,8 @@
 </template>
 
 <script>
+import roles from "@/store/enums/roles";
+
 export default {
     name: "EmployeeCard",
     props: {
@@ -29,27 +43,9 @@ export default {
     },
     data() {
         return {
-            info: this.getInfo(),
+            roles: roles.roleParser
         }
-    },
-    methods: {
-        getInfo() {
-            const filteredData = Object.keys(this.data)
-                .filter(key => !['id', 'createdAt', 'name'].includes(key))
-                .reduce((res, key) => {
-                    res[key] = Object.assign(this.data)[key]
-                    return res
-                }, {})
-            let info = []
-            for (let item in filteredData) {
-                info.push({
-                    data: filteredData[item],
-                    path: `url(${require(`/src/assets/icons/${item}.svg`)})`
-                })
-            }
-            return info
-        }
-    },
+    }
 }
 </script>
 

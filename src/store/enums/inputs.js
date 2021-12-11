@@ -1,6 +1,7 @@
 const inputs = Object.freeze({
     NAME: 'Имя',
-    AGE: 'Возраст'
+    AGE: 'Возраст',
+    ROLE: 'Должность'
 })
 
 export default inputs

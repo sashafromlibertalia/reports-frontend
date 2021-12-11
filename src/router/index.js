@@ -11,6 +11,7 @@ import NotFound from "@/views/NotFound"
 import EmployeePage from "@/views/preview/EmployeePage";
 import Login from "@/views/Login";
 import helpers from "@/middlewares/helpers";
+import AllEmployees from "@/views/AllEmployees";
 
 Vue.use(VueRouter)
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
         path: SidebarActions.SPRINTS.link,
         name: 'Sprints',
         component: Sprints
+    },
+    {
+        path: SidebarActions.ALL_EMPLOYEES.link,
+        name: 'AllEmployees',
+        component: AllEmployees
     },
     {
         path: SidebarActions.MY_EMPLOYEES.link,
