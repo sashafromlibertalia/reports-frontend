@@ -28,12 +28,12 @@
                 </div>
                 <div class="task-content-section">
                     <h3>Число задач:</h3>
-                    <p>{{ this.currentUser.tasks.length }}</p>
+                    <p>{{ this.userTasks.length }}</p>
                 </div>
             </div>
         </div>
         <button class="delete-item" type="button" @click="handleRemoveEmployee"
-                v-if="this.profile.id !== this.currentUser.id && this.profile.role === roles.LEAD">Удалить сотрудника
+                v-if="this.currentUser.boss === this.profile.id">Удалить сотрудника
         </button>
         <div class="preview" v-if="[roleEnum.MANAGER, roleEnum.LEAD].includes(this.currentUser.role)">
             <h3>Подчиненные</h3>
@@ -46,7 +46,7 @@
         <div class="preview">
             <h3>Список задач</h3>
             <div class="employees-container">
-                <template v-for="(task, index) in this.currentUser.tasks">
+                <template v-for="(task, index) in this.userTasks">
                     <TaskItem :key="index" :item="task"/>
                 </template>
             </div>
@@ -77,9 +77,11 @@ export default {
     },
     computed: {
         ...mapGetters(['profile']),
+        ...mapGetters('tasks', ['userTasks']),
         ...mapGetters('employees', ['currentUser', 'staff', 'allUsers'])
     },
     methods: {
+        ...mapActions('tasks', ['getUserTasks']),
         ...mapActions('employees', ['setCurrentUser', 'removeUser', 'getStaffOfUser', 'getAllUsers']),
         async handleRemoveEmployee() {
             if (await this.removeUser(this.id)) {
@@ -107,6 +109,7 @@ export default {
         await this.getAllUsers()
         await this.setCurrentUser(this.id)
         await this.getStaffOfUser(this.id)
+        await this.getUserTasks(this.id)
 
         this.boss = this.allUsers.filter(item => item.id === this.currentUser.boss)[0].name
     },

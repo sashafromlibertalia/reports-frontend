@@ -1,8 +1,8 @@
 <template>
     <div>
         <h1 class="page-title">Задачи</h1>
-        <div class="task-board-wrapper" :style="{flexDirection: this.allTasks.length > 0 ? 'row' : 'column', alignItems: this.allTasks.length > 0 ? null : 'center'}">
-            <template v-if="this.allTasks.length > 0">
+        <div class="task-board-wrapper" :style="{flexDirection: this.sprintTasks.length > 0 ? 'row' : 'column', alignItems: this.sprintTasks.length > 0 ? null : 'center'}">
+            <template v-if="this.sprintTasks.length > 0">
                 <TasksBoard :status="statuses.WAITING" @change="openForm"/>
                 <TasksBoard :status="statuses.IN_PROGRESS" @change="openForm"/>
                 <TasksBoard :status="statuses.DONE" @change="openForm"/>
@@ -60,26 +60,34 @@ export default {
                 name: null,
                 description: null,
                 employeeId: null,
-                status: null
+                status: null,
+                sprint: null
             }
         }
     },
     computed: {
         ...mapGetters(['profile']),
-        ...mapGetters('tasks', ['allTasks']),
+        ...mapGetters('sprints', ['currentSprint']),
+        ...mapGetters('tasks', ['sprintTasks']),
         ...mapGetters('employees', ['allUsers', 'currentUser']),
     },
     methods: {
-        ...mapActions('tasks', ['getAllTasks', 'createTask']),
+        ...mapActions('sprints', ['getCurrentSprint']),
+        ...mapActions('tasks', ['getSprintTasks', 'createTask']),
         ...mapActions('employees', ['getAllUsers', 'setCurrentUser']),
         getKeyByValue(object, value) {
             return Object.keys(object).find(key => object[key] === value);
         },
         openForm(e) {
-            this.isCreatingTask = true
-            if (Object.values(taskStatuses).includes(e)) {
-                this.taskType = e
-                this.form.status = this.getKeyByValue(taskStatuses, e)
+            if (this.currentSprint === null) {
+                alert('Сначала нужно создать спринт')
+            } else {
+                this.isCreatingTask = true
+                if (Object.values(taskStatuses).includes(e)) {
+                    this.taskType = e
+                    this.form.status = this.getKeyByValue(taskStatuses, e)
+                    this.form.sprint = this.currentSprint.id
+                }
             }
         },
         async handleCreateNewTask() {
@@ -88,12 +96,13 @@ export default {
                 await this.$toasted.show('Задача добавлена', {
                     duration : 5000
                 })
-                await this.getAllTasks()
+                await this.getSprintTasks(this.currentSprint.id)
             })
         },
     },
     async mounted() {
-        await this.getAllTasks()
+        await this.getCurrentSprint()
+        await this.getSprintTasks(this.currentSprint.id)
         await this.getAllUsers()
         await this.setCurrentUser(this.profile.id)
         this.options = this.allUsers.map(item => {

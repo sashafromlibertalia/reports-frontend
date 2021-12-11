@@ -5,6 +5,7 @@ import helpers from "@/middlewares/helpers";
 import tasks from './modules/tasks'
 import employees from "@/store/modules/employees";
 import comments from "@/store/modules/comments";
+import sprints from "@/store/modules/sprints";
 
 import api from "@/middlewares/api";
 import router from '@/router/index'
@@ -70,6 +71,7 @@ export default new Vuex.Store({
     modules: {
         tasks,
         employees,
-        comments
+        comments,
+        sprints
     }
 })

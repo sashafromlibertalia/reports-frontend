@@ -38,22 +38,22 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('tasks', ['allTasks']),
+        ...mapGetters('tasks', ['sprintTasks']),
         tasks() {
             switch (this.status) {
                 case taskStatuses.WAITING:
-                    return this.allTasks.filter(item => taskStatuses[item.status] === taskStatuses.WAITING)
+                    return this.sprintTasks.filter(item => taskStatuses[item.status] === taskStatuses.WAITING)
                 case taskStatuses.IN_PROGRESS:
-                    return this.allTasks.filter(item => taskStatuses[item.status] === taskStatuses.IN_PROGRESS)
+                    return this.sprintTasks.filter(item => taskStatuses[item.status] === taskStatuses.IN_PROGRESS)
                 case taskStatuses.DONE:
-                    return this.allTasks.filter(item => taskStatuses[item.status] === taskStatuses.DONE)
+                    return this.sprintTasks.filter(item => taskStatuses[item.status] === taskStatuses.DONE)
                 default:
                     return []
             }
         }
     },
     methods: {
-        ...mapActions('tasks', ['getAllTasks', 'getUserTasks']),
+        ...mapActions('tasks', ['getSprintTasks', 'getUserTasks']),
         getFill(status) {
             switch (status) {
                 case taskStatuses.WAITING:

@@ -47,6 +47,7 @@ a {
     color: $white;
     border: none;
     outline: none;
+    margin-top: 1rem;
     padding: 12px 16px;
     transition: all 200ms ease;
 
@@ -89,7 +90,7 @@ a {
 
 
 .preview {
-    margin-top: 5rem;
+    margin-top: 3rem;
 
     h3 {
         @include textHeader;
@@ -102,4 +103,8 @@ a {
         flex-direction: column;
         margin-top: 4rem;
     }
+}
+
+.nav-tabs .nav-link {
+    color: gray;
 }

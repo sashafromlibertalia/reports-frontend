@@ -4,6 +4,7 @@ const state = {
     allTasks: [],
     currentTask: null,
     userTasks: null,
+    sprintTasks: []
 }
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
     },
     SET_TASKS_BY_USER(state, payload) {
         state.userTasks = payload
+    },
+    SET_SPRINT_TASKS(state, payload) {
+        state.sprintTasks = payload
     }
 }
 
@@ -23,6 +27,18 @@ const actions = {
         try {
             const {data} = await api.get('tasks')
             commit('SET_ALL_TASKS', data)
+        } catch (e) {
+            console.log(e)
+        }
+    },
+    async getSprintTasks({commit}, payload) {
+        try {
+            const {data} = await api.get('tasks', {}, {
+                params: {
+                    sprint: payload
+                }
+            })
+            commit('SET_SPRINT_TASKS', data)
         } catch (e) {
             console.log(e)
         }
@@ -75,6 +91,7 @@ const getters = {
     allTasks: state => state.allTasks,
     currentTask: state => state.currentTask,
     userTasks: state => state.userTasks,
+    sprintTasks: state => state.sprintTasks
 }
 
 export default {
