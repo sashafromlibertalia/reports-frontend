@@ -25,7 +25,7 @@
             <div class="task-content-column">
                 <div class="task-content-section">
                     <h3>Описание задачи:</h3>
-                    <p>{{ this.currentTask.description }}</p>
+                    <p>{{ description }}</p>
                 </div>
                 <div class="task-content-section">
                     <h3>Дата создания:</h3>
@@ -101,6 +101,13 @@ export default {
         creationDate() {
             return this.moment(this.currentTask.createdAt).format("DD/MM/YYYY")
         },
+        description() {
+            if (this.currentTask.description !== null) {
+                return this.currentTask.description
+            } else {
+                return 'Нет описания'
+            }
+        },
     },
     methods: {
         ...mapActions('employees', ['getAllUsers']),
@@ -143,7 +150,7 @@ export default {
                 this.form.body.message = null
                 this.comments = this.currentTask.comments.sort((a, b) => {
                     return new Date(a.createdAt) - new Date(b.createdAt);
-                }).reverse()
+                })
             })
         },
         handleBack() {
@@ -160,9 +167,11 @@ export default {
         this.form.id = this.id
         this.comments = this.currentTask.comments.sort((a, b) => {
             return new Date(a.createdAt) - new Date(b.createdAt);
-        }).reverse()
+        })
     },
-    components: {HistoryItem}
+    components: {
+        HistoryItem
+    }
 }
 </script>
 

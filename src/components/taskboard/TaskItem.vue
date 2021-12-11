@@ -25,7 +25,7 @@ export default {
     name: "TaskItem",
     computed: {
         description() {
-            if (this.item.description.length > 0) {
+            if (this.item.description !== null) {
                 if (this.item.description.length > MaximumDescriptionLength)
                     return this.item.description.slice(0, MaximumDescriptionLength) + '...'
                 else

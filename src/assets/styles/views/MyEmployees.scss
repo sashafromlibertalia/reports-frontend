@@ -9,5 +9,16 @@
     width: 85%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+.all-employees-container {
+    justify-content: space-between;
+    align-items: baseline;
+    flex-direction: column;
+    width: 85%;
+    display: flex;
+}
+
+.type-employee-wrapper {
+    margin-bottom: 1rem;
 }

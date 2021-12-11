@@ -30,7 +30,7 @@ export default {
             author: null
         }
     },
-    async mounted() {
+    mounted() {
         this.eventDate = moment(this.item.createdAt).format("D MMMM YYYY, HH:mm:ss")
         this.author = this.allUsers.filter(item => item.id === this.item.author)[0].name
     }

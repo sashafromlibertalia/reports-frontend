@@ -1,6 +1,6 @@
 <template>
-    <div class="employee-card">
-        <router-link :to="'/employees/' + this.data.id">
+    <div class="employee-card" :class="{active: this.data.id === this.profile.id}">
+        <router-link :key="this.data.id" :to="{path: `/employees/${this.data.id}`, params: {id: this.data.id}}">
             <div class="employee-card-wrapper">
                 <h3>{{ this.data.name }}</h3>
                 <div class="info">
@@ -32,6 +32,7 @@
 
 <script>
 import roles from "@/store/enums/roles";
+import {mapGetters} from "vuex";
 
 export default {
     name: "EmployeeCard",
@@ -40,6 +41,9 @@ export default {
             type: Object,
             required: true,
         }
+    },
+    computed: {
+        ...mapGetters(['profile']),
     },
     data() {
         return {

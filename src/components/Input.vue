@@ -4,7 +4,6 @@
             <h3> {{ this.type }} </h3>
         </div>
         <input v-if="this.type !== roles.ROLE" v-model="value" type="text" :placeholder="placeholder" @input="$emit('input', $event.target.value)">
-        <b-form-select v-else style="border: none; padding: 8px 12px" size="lg" class="bg-dark text-white" v-model="value"  @input="$emit('input', value)" :options="options"></b-form-select>
     </div>
 </template>
 

@@ -16,6 +16,10 @@
                     <h3>Возраст:</h3>
                     <p>{{ this.currentUser.age }}</p>
                 </div>
+                <div class="task-content-section" v-if="this.currentUser.role !== roleEnum.LEAD">
+                    <h3>Босс:</h3>
+                    <router-link :key="this.currentUser.boss" @click.native="updateData" :to="{name: 'EmployeePage', params: {id: this.currentUser.boss}}">{{ boss }}</router-link>
+                </div>
             </div>
             <div class="task-content-column">
                 <div class="task-content-section">
@@ -35,7 +39,7 @@
             <h3>Подчиненные</h3>
             <div class="employees-container">
                 <template v-for="(user, index) in this.staff">
-                    <EmployeeCard :data="user" :key="index"/>
+                    <EmployeeCard @click.native="updateData" :data="user" :key="index"/>
                 </template>
             </div>
         </div>
@@ -67,15 +71,16 @@ export default {
     data() {
         return {
             roleEnum: roles.roles,
-            roles: roles.roleParser
+            roles: roles.roleParser,
+            boss: null
         }
     },
     computed: {
         ...mapGetters(['profile']),
-        ...mapGetters('employees', ['currentUser', 'staff'])
+        ...mapGetters('employees', ['currentUser', 'staff', 'allUsers'])
     },
     methods: {
-        ...mapActions('employees', ['setCurrentUser', 'removeUser', 'getStaffOfUser']),
+        ...mapActions('employees', ['setCurrentUser', 'removeUser', 'getStaffOfUser', 'getAllUsers']),
         async handleRemoveEmployee() {
             if (await this.removeUser(this.id)) {
                 this.$toasted.show('Сотрудник был удален', {
@@ -91,11 +96,19 @@ export default {
         },
         handleBack() {
             this.$router.go(-1)
+        },
+        async updateData() {
+            await this.setCurrentUser(this.id)
+            await this.getStaffOfUser(this.id)
+            this.boss = this.allUsers.filter(item => item.id === this.currentUser.boss)[0].name
         }
     },
     async mounted() {
+        await this.getAllUsers()
         await this.setCurrentUser(this.id)
         await this.getStaffOfUser(this.id)
+
+        this.boss = this.allUsers.filter(item => item.id === this.currentUser.boss)[0].name
     },
     components: {
         EmployeeCard,

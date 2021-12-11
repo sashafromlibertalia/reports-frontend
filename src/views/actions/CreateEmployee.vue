@@ -4,7 +4,6 @@
         <div class="form-container">
             <Input :type="types.NAME" v-model="form.name"/>
             <Input :type="types.AGE" v-model="form.age"/>
-            <Input :type="types.ROLE" v-model="form.role"/>
         </div>
         <section>
             <button type="submit" class="submit-new-item" @click="handleCreateNewEmployee">Добавить</button>
@@ -15,7 +14,7 @@
 <script>
 import Input from "@/components/Input";
 import inputs from "@/store/enums/inputs";
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import roles from "@/store/enums/roles";
 
 export default {
@@ -26,15 +25,21 @@ export default {
             form: {
                 name: null,
                 age: null,
-                role: null
+                role: null,
+                boss: null
             }
         }
+    },
+    computed: {
+        ...mapGetters(['profile'])
     },
     methods: {
         ...mapActions('employees', ['createUser']),
         async handleCreateNewEmployee() {
-            if (this.form.name !== null && this.form.age !== null && Number.isInteger(parseInt(this.form.age, 10)) && [roles.roles.WORKER, roles.roles.MANAGER].includes(this.form.role)) {
+            if (this.form.name !== null && this.form.age !== null && Number.isInteger(parseInt(this.form.age, 10))) {
                 this.form.age = +this.form.age
+                this.form.boss = this.profile.id
+                this.form.role = this.profile.role === roles.roles.LEAD ? roles.roles.MANAGER : this.profile.role === roles.roles.MANAGER ? roles.roles.WORKER : null
                 if (await this.createUser(this.form))
                     this.$toasted.show('Сотрудник добавлен', {
                         duration : 5000
