@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="page-title">Все сотрудники</h1>
-        <div class="all-employees-container" v-if="this.allUsers.length > 0">
+        <div class="all-employees-container" v-if="this.allUsers !== null && this.allUsers.length > 0">
             <div class="type-employee-wrapper">
                 <h2>{{header.LEAD}}</h2>
                 <template v-for="(user, index) in this.allUsers.filter(item => item.role === role.LEAD)">

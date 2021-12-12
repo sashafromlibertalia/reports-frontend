@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="this.currentUser !== null && this.userTasks !== null">
         <div style="display: flex; justify-content: space-between; align-items: baseline">
             <div style="display: flex; justify-content: flex-start; align-items: baseline">
                 <unicon name="arrow-left" fill="white" @click="handleBack" width="50" height="50"/>
@@ -102,7 +102,9 @@ export default {
         async updateData() {
             await this.setCurrentUser(this.id)
             await this.getStaffOfUser(this.id)
-            this.boss = this.allUsers.filter(item => item.id === this.currentUser.boss)[0].name
+            if (this.allUsers !== null && this.currentUser !== null)
+                this.boss = this.allUsers.filter(item => item.id === this.currentUser.boss)[0] === undefined ? ''
+                    : this.allUsers.filter(item => item.id === this.currentUser.boss)[0].name
         }
     },
     async mounted() {
@@ -111,7 +113,9 @@ export default {
         await this.getStaffOfUser(this.id)
         await this.getUserTasks(this.id)
 
-        this.boss = this.allUsers.filter(item => item.id === this.currentUser.boss)[0].name
+        if (this.allUsers !== null && this.currentUser !== null)
+            this.boss = this.allUsers.filter(item => item.id === this.currentUser.boss)[0] === undefined ? ''
+                : this.allUsers.filter(item => item.id === this.currentUser.boss)[0].name
     },
     components: {
         EmployeeCard,

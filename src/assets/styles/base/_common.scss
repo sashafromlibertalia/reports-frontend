@@ -82,6 +82,20 @@ a {
     @include textHeader;
     transition: 200ms ease all;
 
+    &-danger {
+        border: 2px solid $danger;
+        background: none;
+        border-radius: $border-radius;
+        @include textHeader;
+        color: $danger;
+        transition: 200ms ease all;
+
+        &:hover {
+            background: $danger;
+            color: $white;
+        }
+    }
+
     &:hover {
         background: #121111;
     }
@@ -92,7 +106,7 @@ a {
 .preview {
     margin-top: 3rem;
 
-    h3 {
+    h3, h5 {
         @include textHeader;
         color: $white;
     }

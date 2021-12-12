@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="page-title">Мои сотрудники</h1>
-        <div class="employees-container" v-if="this.staff.length > 0">
+        <div class="employees-container" v-if="this.staff !== null && this.staff.length > 0">
             <template v-for="(user, index) in this.staff">
                 <EmployeeCard :data="user" :key="index"/>
             </template>
@@ -25,7 +25,8 @@ export default {
         ...mapActions('employees', ['getStaffOfUser'])
     },
     async mounted() {
-        await this.getStaffOfUser(this.profile.id)
+        if (this.profile !== null)
+            await this.getStaffOfUser(this.profile.id)
     },
     components: {
         EmployeeCard,

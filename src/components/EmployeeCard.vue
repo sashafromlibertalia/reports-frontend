@@ -1,5 +1,5 @@
 <template>
-    <div class="employee-card" :class="{active: this.data.id === this.profile.id}">
+    <div v-if="this.data !== null" class="employee-card" :class="{active: this.data !== null && this.data.id === this.profile.id}">
         <router-link :key="this.data.id" :to="{path: `/employees/${this.data.id}`, params: {id: this.data.id}}">
             <div class="employee-card-wrapper">
                 <h3>{{ this.data.name }}</h3>

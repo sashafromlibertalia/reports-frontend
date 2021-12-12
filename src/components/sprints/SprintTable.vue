@@ -8,7 +8,7 @@
                 <div class="task-content-column">
                     <div class="task-content-section">
                         <h3>Идентификатор спринта:</h3>
-                        <p>{{this.currentSprint.id}}</p>
+                        <p v-if="this.currentSprint !== null">{{this.currentSprint.id}}</p>
                     </div>
                     <div class="task-content-section">
                         <h3>Число задач</h3>
@@ -18,7 +18,7 @@
                 <div class="task-content-column">
                     <div class="task-content-section">
                         <h3>Интервал спринта</h3>
-                        <p>{{interval}}</p>
+                        <p v-if="this.currentSprint !== null">{{interval}}</p>
                     </div>
                 </div>
             </div>
@@ -63,7 +63,8 @@ export default {
     },
     async mounted() {
         await this.getCurrentSprint()
-        await this.getSprintTasks(this.currentSprint.id)
+        if (this.currentSprint !== null)
+            await this.getSprintTasks(this.currentSprint.id)
     },
     components: {
         EmptyData

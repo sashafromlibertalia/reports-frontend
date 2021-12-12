@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1 class="page-title">Спринты</h1>
-        <template v-if="this.allSprints.length > 0">
+        <template v-if="this.allSprints !== null && this.allSprints.length > 0">
             <b-tabs content-class="mt-3 text-white">
                 <b-tab title="Текущий" active>
                     <SprintTable :is-active="true" :sprints="this.allSprints.filter(item => item.isActive)"/>
@@ -56,7 +56,12 @@ export default {
         async createSprint() {
             this.form.startDate = this.week[0]
             this.form.endDate = this.week.slice(-1)[0]
-            await this.saveSprint(this.form)
+            await this.saveSprint(this.form).then(async () => {
+                await this.getAllSprints()
+                await this.$toasted.show('Спринт был создан', {
+                    duration: 5000
+                })
+            })
         }
     },
     async mounted() {

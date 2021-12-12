@@ -1,4 +1,3 @@
-
 const routes = Object.freeze({
     TASKS: {
         name: "Задачи",
@@ -10,6 +9,12 @@ const routes = Object.freeze({
         name: "Все сотрудники",
         icon: "all-employees.svg",
         link: "/employees",
+        isAll: true
+    },
+    ALL_REPORTS: {
+        name: "Отчеты",
+        icon: "reports.svg",
+        link: "/reports",
         isAll: true
     },
     MY_EMPLOYEES: {
@@ -33,7 +38,7 @@ const routes = Object.freeze({
     NEW_REPORT: {
         name: "Новый отчет",
         icon: "new-report.svg",
-        link: "/create/report",
+        link: "/reports/create",
         isAll: true
     }
 })
