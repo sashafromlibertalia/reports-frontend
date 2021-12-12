@@ -74,5 +74,4 @@ export default {
 
 <style scoped lang="scss">
 @import "src/assets/styles/components/SprintTable";
-@import "../../assets/styles/views/TaskPage";
 </style>

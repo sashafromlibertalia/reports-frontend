@@ -99,7 +99,7 @@ export default {
         ...mapGetters('tasks', ['currentTask']),
         ...mapGetters('comments', ['currentComments']),
         creationDate() {
-            return this.moment(this.currentTask.createdAt).format("DD/MM/YYYY")
+            return this.moment(this.currentTask.createdAt).format("DD/MM/YYYY, HH:mm:ss")
         },
         description() {
             if (this.currentTask.description !== null) {
@@ -174,7 +174,3 @@ export default {
     }
 }
 </script>
-
-<style scoped lang="scss">
-@import "../../assets/styles/views/TaskPage";
-</style>

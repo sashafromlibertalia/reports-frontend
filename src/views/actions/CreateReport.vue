@@ -86,6 +86,7 @@ export default {
                         status: null,
                         tasks: []
                     }
+                    this.$router.go(-1)
                 })
             }
         },
@@ -98,7 +99,7 @@ export default {
             this.form = {
                 author: this.profile.id,
                 sprint: this.currentSprint.id,
-                status: reports.DRAFT,
+                status: reports.reports.DRAFT,
                 tasks: this.userTasks.map(item => {
                     return {
                         taskId: item.id
@@ -115,5 +116,4 @@ export default {
 
 <style scoped lang="scss">
 @import "src/assets/styles/views/CreateReport";
-@import "src/assets/styles/views/MyEmployees";
 </style>

@@ -14,6 +14,11 @@
         </div>
         <div class="preview" v-if="this.profile.role !== roles.WORKER">
             <h4>Отчеты моих сотрудников</h4>
+            <div class="employees-container">
+                <template v-for="(item, index) in staffReports">
+                    <ReportCard :item="item" :key="index"/>
+                </template>
+            </div>
         </div>
         <div class="preview" v-if="this.profile.role !== roles.WORKER">
             <h4>Сотрудники, кто не писал отчет</h4>
@@ -37,12 +42,13 @@ export default {
     data() {
         return {
             roles: roles.roles,
-            myReports: null
+            myReports: null,
+            staffReports: [],
         }
     },
     computed: {
         ...mapGetters(['profile']),
-        ...mapGetters('employees', ['staffWithoutReports']),
+        ...mapGetters('employees', ['staffWithoutReports', 'staffWithReports']),
         ...mapGetters('reports', ['sprintReports'])
     },
     methods: {
@@ -56,6 +62,11 @@ export default {
             await this.getStaffWithoutReports(this.profile.id)
 
             this.myReports = this.sprintReports.filter(item => item.author === this.profile.id)
+            if (this.staffWithReports.length > 0) {
+                for (let user of this.staffWithReports) {
+                    this.staffReports.push(this.sprintReports.filter(item => item.author === user.id)[0])
+                }
+            }
         }
     },
     components: {
@@ -64,8 +75,3 @@ export default {
     }
 }
 </script>
-
-<style scoped lang="scss">
-@import "src/assets/styles/views/MyEmployees";
-@import "src/assets/styles/views/EmployeePage";
-</style>

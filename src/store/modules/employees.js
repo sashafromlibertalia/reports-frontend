@@ -4,9 +4,9 @@ import staffQuery from "@/store/enums/employees/staffQuery";
 const state = {
     allUsers: null,
     currentUser: null,
-    staff: [],
-    staffWithReports: [],
-    staffWithoutReports: []
+    staff: null,
+    staffWithReports: null,
+    staffWithoutReports: null
 }
 
 const mutations = {

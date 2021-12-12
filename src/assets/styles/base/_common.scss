@@ -111,6 +111,13 @@ a {
         color: $white;
     }
 
+    p {
+        font-size: 1.5rem;
+        @include textPlain;
+        color: $white;
+    }
+
+
     .history {
         display: flex;
         justify-content: space-between;
@@ -121,4 +128,77 @@ a {
 
 .nav-tabs .nav-link {
     color: gray;
+}
+
+
+.task-content-column {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.task-content-section {
+    margin-bottom: 1rem;
+    h3 {
+        color: gray;
+        @include textHeader;
+        margin: 0;
+        font-size: 1rem !important;
+    }
+
+    p, a {
+        color: $white;
+        @include textPlain;
+        font-weight: 700;
+        font-size: 1.5rem !important;
+    }
+
+    a {
+        text-decoration: underline !important;
+    }
+}
+
+.task-status {
+    display: flex;
+    margin: 0 0 3rem 0;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    span {
+        width: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10px;
+        margin-right: 16px;
+        border-radius: 50%;
+    }
+    p {
+        color: $white;
+        margin: 0;
+    }
+}
+
+.employees-container {
+    justify-content: space-between;
+    align-items: baseline;
+    flex-direction: row;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    @media screen and (min-width: 800px) and (max-width: 1600px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+.all-employees-container {
+    flex-direction: column;
+    width: 100%;
+    display: flex;
+}
+
+.type-employee-wrapper {
+    margin-bottom: 1rem;
 }

@@ -1,8 +1,10 @@
 <template>
-    <div v-if="this.item !== null" class="report-item">
-        <router-link :key="this.item.id" :to="{path: `/reports/${this.item.id}`, params: {id: this.item.id}}">
+    <div v-if="this.item !== null" class="report-item" :class="{active: this.item.author === this.profile.id}">
+        <router-link :key="this.item.id" :to="{path: `/reports/${this.item.id}`, params: {item: this.item.id}}">
             <div class="report-item-wrapper">
-                <span>{{this.item.status}}</span>
+                <div :class="{'draft': status[this.item.status] === status.DRAFT,
+                'submitted': status[this.item.status] === status.SUBMITTED,
+                'approved': status[this.item.status] === status.APPROVED}">{{status[this.item.status]}}</div>
                 <div class="info">
                     <ul class="info-list">
                         <li class="info-row">
@@ -42,6 +44,7 @@
 <script>
 import moment from "moment";
 import {mapActions, mapGetters} from "vuex";
+import reports from "@/store/enums/reports";
 
 export default {
     name: "ReportCard",
@@ -53,10 +56,12 @@ export default {
     },
     data() {
         return {
-            author: null
+            author: null,
+            status: reports.reportsParser
         }
     },
     computed: {
+        ...mapGetters(['profile']),
         ...mapGetters('employees', ['allUsers']),
         createdAt() {
             return moment(this.item.createdAt).format("DD/MM/YYYY, HH:mm:ss")

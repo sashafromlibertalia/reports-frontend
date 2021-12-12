@@ -4,7 +4,6 @@
 
 .report-item {
     width: fit-content;
-    height: auto;
     background: #151515;
     box-sizing: border-box;
     border-radius: $border-radius;
@@ -29,8 +28,6 @@
         font-size: 1.5rem;
     }
     .info {
-        padding: 0;
-
         &-list {
             padding: 0;
             @include textPlain;
@@ -59,14 +56,30 @@
 }
 
 
-.draft {
+.draft, .submitted, .approved {
+    border-radius: 2rem;
+    @include textPlain;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    padding: 4px 12px;
+    width: fit-content;
+}
 
+.draft {
+    color: $tasks-waiting;
+    background: rgba(91, 65, 255, 0.2);
 }
 
 .submitted {
-
+    color: $tasks-in-progress;
+    background: rgba(244, 200, 87, 0.2);
 }
 
 .approved {
+    color: $tasks-ready;
+    background: rgba(68, 238, 126, 0.2);
+}
 
+.active {
+    border-color: $brand;
 }

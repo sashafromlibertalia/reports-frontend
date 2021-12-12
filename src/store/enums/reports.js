@@ -4,4 +4,10 @@ const reports = Object.freeze({
     APPROVED: "APPROVED"
 })
 
-export default reports
+const reportsParser = Object.freeze({
+    DRAFT: "Черновик",
+    SUBMITTED: "Сохранено",
+    APPROVED: "Одобрено"
+})
+
+export default { reports, reportsParser}
