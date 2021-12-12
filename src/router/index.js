@@ -14,6 +14,7 @@ import helpers from "@/middlewares/helpers";
 import AllEmployees from "@/views/AllEmployees";
 import CreateReport from "@/views/actions/CreateReport";
 import AllReports from "@/views/AllReports";
+import ReportPage from "@/views/preview/ReportPage";
 
 Vue.use(VueRouter)
 const routes = [
@@ -61,6 +62,12 @@ const routes = [
         path: "/tasks/:id",
         name: "TaskPage",
         component: TaskPage,
+        props: true
+    },
+    {
+        path: "/reports/:id",
+        name: "ReportPage",
+        component: ReportPage,
         props: true
     },
     {

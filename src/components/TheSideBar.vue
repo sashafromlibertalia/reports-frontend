@@ -54,9 +54,6 @@ export default {
             await this.signOut()
         },
         isDisplaying(item) {
-            if (this.profile.role === this.roles.LEAD && item.name === this.routes.NEW_REPORT.name)
-                return false
-
             if ([this.roles.MANAGER, this.roles.LEAD].includes(this.profile.role))
                 return true
             else

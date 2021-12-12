@@ -8,14 +8,16 @@
     flex-direction: row;
     width: 85%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    @media screen and (min-width: 800px) and (max-width: 1600px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 .all-employees-container {
-    justify-content: space-between;
-    align-items: baseline;
     flex-direction: column;
-    width: 85%;
+    width: 100%;
     display: flex;
 }
 

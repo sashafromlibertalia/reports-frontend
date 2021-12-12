@@ -125,6 +125,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../assets/styles/views/EmployeePage";
+@import "src/assets/styles/views/EmployeePage";
 @import "src/assets/styles/views/MyEmployees";
 </style>

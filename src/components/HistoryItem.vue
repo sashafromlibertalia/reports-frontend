@@ -19,7 +19,10 @@ import {mapGetters} from "vuex";
 export default {
     name: "HistoryItem",
     props: {
-        item: Object,
+        item: {
+            type: Object,
+            required: true
+        }
     },
     computed: {
         ...mapGetters('employees', ['allUsers'])

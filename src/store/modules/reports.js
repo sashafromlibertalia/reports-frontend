@@ -2,7 +2,8 @@ import api from '@/middlewares/api'
 
 const state = {
     allReports: null,
-    currentReport: null
+    currentReport: null,
+    sprintReports: null,
 }
 
 const mutations = {
@@ -11,6 +12,9 @@ const mutations = {
     },
     SET_CURRENT_REPORT(state, payload) {
         state.currentReport = payload
+    },
+    SET_SPRINT_REPORTS(state, payload) {
+        state.sprintReports = payload
     }
 }
 
@@ -19,6 +23,14 @@ const actions = {
         try {
             const {data} = await api.get('reports')
             commit('SET_ALL_REPORTS', data)
+        } catch (e) {
+            console.log(e)
+        }
+    },
+    async getSprintReports({commit}) {
+        try {
+            const {data} = await api.get('reports')
+            commit('SET_SPRINT_REPORTS', data)
         } catch (e) {
             console.log(e)
         }
@@ -56,7 +68,8 @@ const actions = {
 
 const getters = {
     allReports: state => state.allReports,
-    currentReport: state => state.currentReport
+    currentReport: state => state.currentReport,
+    sprintReports: state => state.sprintReports
 }
 
 export default {

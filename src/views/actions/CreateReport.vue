@@ -64,29 +64,36 @@ export default {
         ...mapGetters(['profile']),
         ...mapGetters('sprints', ['currentSprint']),
         ...mapGetters('tasks', ['sprintTasks', 'userTasks']),
+        ...mapGetters('employees', ['staff'])
     },
     methods: {
         ...mapActions('sprints', ['getCurrentSprint']),
         ...mapActions('tasks', ['getUserTasks', 'getSprintTasks']),
         ...mapActions('reports', ['saveReport']),
+        ...mapActions('employees', ['getStaffOfUser']),
         async handleDraft() {
-            await this.saveReport(this.form).then(async () => {
-                this.form = {
-                    author: null,
-                    sprint: null,
-                    description: null,
-                    status: null,
-                    tasks: []
-                }
-                await this.$toasted.show('Черновик репорта был сохранен', {
-                    duration: 5000
+            if (this.currentSprint === null) {
+                alert('Сначала нужно создать спринт')
+            } else {
+                await this.saveReport(this.form).then(async () => {
+                    await this.$toasted.show('Черновик репорта был сохранен', {
+                        duration: 5000
+                    })
+                    this.form = {
+                        author: null,
+                        sprint: null,
+                        description: null,
+                        status: null,
+                        tasks: []
+                    }
                 })
-            })
+            }
         },
     },
     async mounted() {
         await this.getCurrentSprint()
         if (this.profile !== null) {
+            await this.getStaffOfUser(this.profile.id)
             await this.getUserTasks(this.profile.id)
             this.form = {
                 author: this.profile.id,

@@ -38,7 +38,7 @@ const routes = Object.freeze({
     NEW_REPORT: {
         name: "Новый отчет",
         icon: "new-report.svg",
-        link: "/reports/create",
+        link: "/create/reports",
         isAll: true
     }
 })

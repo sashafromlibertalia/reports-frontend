@@ -71,7 +71,3 @@ export default {
     components: {EmptyData, SprintTable}
 }
 </script>
-
-<style scoped>
-
-</style>

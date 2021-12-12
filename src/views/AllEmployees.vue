@@ -10,15 +10,19 @@
             </div>
             <div class="type-employee-wrapper">
                 <h2>{{header.MANAGER}}</h2>
-                <template v-for="(user, index) in this.allUsers.filter(item => item.role === role.MANAGER)">
-                    <EmployeeCard :data="user" :key="index"/>
-                </template>
+                <div class="employees-container">
+                    <template v-for="(user, index) in this.allUsers.filter(item => item.role === role.MANAGER)">
+                        <EmployeeCard :data="user" :key="index"/>
+                    </template>
+                </div>
             </div>
             <div class="type-employee-wrapper">
                 <h2>{{header.WORKER}}</h2>
-                <template v-for="(user, index) in this.allUsers.filter(item => item.role === role.WORKER)">
-                    <EmployeeCard :data="user" :key="index"/>
-                </template>
+                <div class="employees-container">
+                    <template v-for="(user, index) in this.allUsers.filter(item => item.role === role.WORKER)">
+                        <EmployeeCard :data="user" :key="index"/>
+                    </template>
+                </div>
             </div>
         </div>
         <EmptyData v-else/>
