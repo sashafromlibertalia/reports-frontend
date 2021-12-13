@@ -38,7 +38,7 @@
             <h3>Описание отчета:</h3>
             <p>{{ this.currentReport.description }}</p>
         </div>
-        <div class="preview" v-if="this.profile.role !== roles.WORKER">
+        <div class="preview" v-if="this.profile.role !== roles.WORKER && this.currentReport.staffReports.length > 0">
             <h3>Прикрепленные отчеты сотрудников</h3>
             <div class="employees-container">
                 <template v-for="(report, index) in this.currentReport.staffReports">
@@ -49,7 +49,7 @@
         <div class="preview" v-if="this.currentReport.tasks.length > 0">
             <h3>Задачи, прикрепленные к отчету</h3>
             <div class="employees-container">
-                <template v-for="(task, index) in addedTasks">
+                <template v-for="(task, index) in this.currentReport.tasks">
                     <TaskItem :item="task" :key="index"/>
                 </template>
             </div>
@@ -150,7 +150,7 @@ export default {
                 }
 
                 this.newTasks = this.sprintTasks.filter(item => item.employeeId === this.currentReport.author)
-                    .filter(item => moment(item.createdAt).isAfter(moment(this.currentReport.createdAt)) && !this.addedTasks.includes(item))
+                    .filter(item => moment(item.createdAt).isAfter(moment(this.currentReport.createdAt)) && !this.addedTasks.some(task => task.id === item.id))
 
                 if (this.staffWithReports.length > 0) {
                     for (let user of this.staffWithReports) {
