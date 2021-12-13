@@ -22,6 +22,15 @@
                     </div>
                 </div>
             </div>
+            <div class="preview">
+                <h3>Одобренные отчеты</h3>
+                <div class="employees-container" v-if="this.currentSprint !== null && this.currentSprint.approvedReports.length > 0">
+                    <template v-for="(report, index) in this.currentSprint.approvedReports">
+                        <ReportCard :item="report" :key="index"/>
+                    </template>
+                </div>
+                <empty-data v-else/>
+            </div>
         </template>
     </div>
 </template>
@@ -30,6 +39,8 @@
 import EmptyData from "@/views/EmptyData";
 import moment from "moment";
 import {mapActions, mapGetters} from "vuex";
+import ReportCard from "@/components/ReportCard";
+
 export default {
     name: "SprintTable",
     props: {
@@ -67,7 +78,8 @@ export default {
             await this.getSprintTasks(this.currentSprint.id)
     },
     components: {
-        EmptyData
+        EmptyData,
+        ReportCard
     }
 }
 </script>

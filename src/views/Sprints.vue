@@ -38,10 +38,10 @@ export default {
     },
     computed: {
         ...mapGetters(['profile']),
-        ...mapGetters('sprints', ['allSprints']),
+        ...mapGetters('sprints', ['allSprints', 'currentSprint']),
     },
     methods: {
-        ...mapActions('sprints', ['getAllSprints', 'saveSprint']),
+        ...mapActions('sprints', ['getAllSprints', 'saveSprint', 'getCurrentSprint']),
         getWeek() {
             let curr = new Date
             let week = []
@@ -54,6 +54,7 @@ export default {
             return week
         },
         async createSprint() {
+            this.week = this.getWeek()
             this.form.startDate = this.week[0]
             this.form.endDate = this.week.slice(-1)[0]
             await this.saveSprint(this.form).then(async () => {
@@ -65,8 +66,8 @@ export default {
         }
     },
     async mounted() {
+        await this.getCurrentSprint()
         await this.getAllSprints()
-        this.week = this.getWeek()
     },
     components: {EmptyData, SprintTable}
 }

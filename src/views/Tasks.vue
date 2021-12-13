@@ -91,13 +91,17 @@ export default {
             }
         },
         async handleCreateNewTask() {
-            await this.createTask(this.form).then(async () => {
-                this.isCreatingTask = false
-                await this.$toasted.show('Задача добавлена', {
-                    duration : 5000
+            if (this.form.employeeId === null) {
+                alert("Выберите подчиненного")
+            } else {
+                await this.createTask(this.form).then(async () => {
+                    this.isCreatingTask = false
+                    await this.$toasted.show('Задача добавлена', {
+                        duration : 5000
+                    })
+                    await this.getSprintTasks(this.currentSprint.id)
                 })
-                await this.getSprintTasks(this.currentSprint.id)
-            })
+            }
         },
     },
     async mounted() {

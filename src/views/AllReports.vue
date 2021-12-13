@@ -2,10 +2,10 @@
     <div>
         <div style="display: flex; justify-content: space-between; align-items: center">
             <h1 class="page-title">Отчеты</h1>
-            <button class="submit-new-item" style="width: 30%" v-if="this.profile.role === roles.LEAD">Создать общий отчет</button>
+            <button class="submit-new-item" style="width: 30%" v-if="this.profile.role === roles.LEAD && this.currentSprint.approvedReports.length === 0 && this.sprintReports.length > 0" @click="handleApprove">Создать общий отчет</button>
         </div>
         <div class="preview">
-            <h4>Мои отчеты</h4>
+            <h4>Мой отчет</h4>
             <div class="employees-container">
                 <template v-for="(item, index) in myReports">
                     <ReportCard :item="item" :key="index"/>
@@ -48,14 +48,29 @@ export default {
     },
     computed: {
         ...mapGetters(['profile']),
+        ...mapGetters('sprints', ['currentSprint']),
         ...mapGetters('employees', ['staffWithoutReports', 'staffWithReports']),
         ...mapGetters('reports', ['sprintReports'])
     },
     methods: {
+        ...mapActions('sprints', ['getCurrentSprint']),
         ...mapActions('employees', ['getStaffWithReports', 'getStaffWithoutReports']),
-        ...mapActions('reports', ['getSprintReports'])
+        ...mapActions('reports', ['getSprintReports', 'approveReports']),
+        async handleApprove() {
+            if (this.staffWithoutReports.length > 0) {
+                alert('Некоторые сотрудники не заполнили отчеты')
+            } else {
+                await this.approveReports(this.profile.id).then(() => {
+                    this.$toasted.show('Все отчеты были одобрены 🎉', {
+                        duration : 5000
+                    })
+                    this.$router.go(-1);
+                })
+            }
+        }
     },
     async mounted() {
+        await this.getCurrentSprint()
         await this.getSprintReports()
         if (this.profile !==  null) {
             await this.getStaffWithReports(this.profile.id)

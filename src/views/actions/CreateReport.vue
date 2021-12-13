@@ -31,6 +31,14 @@
                              class="bg-dark text-white" placeholder="Я так старался сделать репорты, что лишился сна..."
                              rows="2" style="border: none;" max-rows="10"></b-form-textarea>
         </div>
+        <div class="preview" v-if="this.profile.role !== role.WORKER">
+            <h3>Отчеты сотрудников</h3>
+            <div class="employees-container">
+                <template v-for="(item, index) in staffReports">
+                    <ReportCard :item="item" :key="index"/>
+                </template>
+            </div>
+        </div>
         <div style="display: flex; justify-content: space-between; width: 30rem">
             <button type="submit" class="submit-new-item"
                     style="width: fit-content; font-size: 1.1rem; margin-top: 2rem; padding: 8px 16px"
@@ -45,18 +53,23 @@ import {mapActions, mapGetters} from "vuex";
 import TaskItem from "@/components/taskboard/TaskItem";
 import taskStatuses from "@/store/enums/taskStatuses";
 import reports from "@/store/enums/reports";
+import roles from "@/store/enums/roles";
+import ReportCard from "@/components/ReportCard";
 
 export default {
     name: "CreateReport",
     data() {
         return {
             status: taskStatuses,
+            role: roles.roles,
+            staffReports: [],
             form: {
                 author: null,
                 sprint: null,
                 description: null,
                 status: null,
-                tasks: []
+                tasks: [],
+                staffReports: [],
             }
         }
     },
@@ -64,13 +77,14 @@ export default {
         ...mapGetters(['profile']),
         ...mapGetters('sprints', ['currentSprint']),
         ...mapGetters('tasks', ['sprintTasks', 'userTasks']),
-        ...mapGetters('employees', ['staff'])
+        ...mapGetters('employees', ['staffWithReports']),
+        ...mapGetters('reports', ['sprintReports'])
     },
     methods: {
         ...mapActions('sprints', ['getCurrentSprint']),
         ...mapActions('tasks', ['getUserTasks', 'getSprintTasks']),
-        ...mapActions('reports', ['saveReport']),
-        ...mapActions('employees', ['getStaffOfUser']),
+        ...mapActions('reports', ['saveReport', 'getSprintReports']),
+        ...mapActions('employees', ['getStaffOfUser', 'getStaffWithReports']),
         async handleDraft() {
             if (this.currentSprint === null) {
                 alert('Сначала нужно создать спринт')
@@ -84,7 +98,8 @@ export default {
                         sprint: null,
                         description: null,
                         status: null,
-                        tasks: []
+                        tasks: [],
+                        newStaffReports: []
                     }
                     this.$router.go(-1)
                 })
@@ -93,22 +108,27 @@ export default {
     },
     async mounted() {
         await this.getCurrentSprint()
+        await this.getSprintReports()
         if (this.profile !== null) {
-            await this.getStaffOfUser(this.profile.id)
             await this.getUserTasks(this.profile.id)
+            await this.getStaffWithReports(this.profile.id)
+            if (this.staffWithReports.length > 0) {
+                for (let user of this.staffWithReports) {
+                    this.staffReports.push(this.sprintReports.filter(item => item.author === user.id)[0])
+                }
+            }
+
             this.form = {
                 author: this.profile.id,
                 sprint: this.currentSprint.id,
                 status: reports.reports.DRAFT,
-                tasks: this.userTasks.map(item => {
-                    return {
-                        taskId: item.id
-                    }
-                })
+                tasks: this.userTasks,
+                newStaffReports: this.staffReports
             }
         }
     },
     components: {
+        ReportCard,
         TaskItem
     }
 }

@@ -38,7 +38,15 @@
             <h3>Описание отчета:</h3>
             <p>{{ this.currentReport.description }}</p>
         </div>
-        <div class="preview">
+        <div class="preview" v-if="this.profile.role !== roles.WORKER">
+            <h3>Прикрепленные отчеты сотрудников</h3>
+            <div class="employees-container">
+                <template v-for="(report, index) in this.currentReport.staffReports">
+                    <ReportCard @click.native="updateData" :item="report" :key="index"/>
+                </template>
+            </div>
+        </div>
+        <div class="preview" v-if="this.currentReport.tasks.length > 0">
             <h3>Задачи, прикрепленные к отчету</h3>
             <div class="employees-container">
                 <template v-for="(task, index) in addedTasks">
@@ -46,7 +54,15 @@
                 </template>
             </div>
         </div>
-        <div class="preview" v-if="this.currentReport.status === status.DRAFT && this.currentReport.author === this.profile.id">
+        <div class="preview" v-if="newStaffReports.length > 0">
+            <h3>Новые отчеты сотрудников</h3>
+            <div class="employees-container">
+                <template v-for="(report, index) in newStaffReports">
+                    <ReportCard :item="report" :key="index"/>
+                </template>
+            </div>
+        </div>
+        <div class="preview" v-if="this.currentReport.status === status.DRAFT && this.currentReport.author === this.profile.id && newTasks.length > 0">
             <h3>Новые задачи для отчета</h3>
             <div class="employees-container">
                 <template v-for="(task, index) in newTasks">
@@ -62,10 +78,12 @@ import {mapActions, mapGetters} from "vuex";
 import moment from "moment";
 import TaskItem from "@/components/taskboard/TaskItem";
 import reports from "@/store/enums/reports";
+import ReportCard from "@/components/ReportCard";
+import roles from "@/store/enums/roles";
 
 export default {
     name: "ReportPage",
-    components: {TaskItem},
+    components: {ReportCard, TaskItem},
     props: {
         id: {
             type: String,
@@ -77,7 +95,9 @@ export default {
             author: null,
             addedTasks: [],
             newTasks: [],
+            newStaffReports: [],
             status: reports.reports,
+            roles: roles.roles,
             form: {
                 id: null,
                 body: {
@@ -94,9 +114,9 @@ export default {
     computed: {
         ...mapGetters(['profile']),
         ...mapGetters('sprints', ['currentSprint']),
-        ...mapGetters('reports', ['currentReport']),
+        ...mapGetters('reports', ['currentReport', 'sprintReports']),
         ...mapGetters('tasks', ['sprintTasks']),
-        ...mapGetters('employees', ['allUsers']),
+        ...mapGetters('employees', ['allUsers', 'staffWithReports']),
         createdAt() {
             return moment(this.currentReport.createdAt).format("DD/MM/YYYY, HH:mm:ss")
         },
@@ -106,11 +126,40 @@ export default {
     },
     methods: {
         ...mapActions('sprints', ['getCurrentSprint']),
-        ...mapActions('reports', ['getReport', 'deleteReport', 'updateReport']),
+        ...mapActions('reports', ['getReport', 'deleteReport', 'updateReport', 'getSprintReports']),
         ...mapActions('tasks', ['getSprintTasks']),
-        ...mapActions('employees', ['setCurrentUser', 'removeUser', 'getAllUsers']),
+        ...mapActions('employees', ['setCurrentUser', 'removeUser', 'getAllUsers', 'getStaffWithReports']),
         handleBack() {
             this.$router.go(-1)
+        },
+        async updateData() {
+            await this.getCurrentSprint()
+            await this.getSprintReports()
+            await this.getReport(this.id)
+            await this.getAllUsers()
+            await this.getSprintTasks(this.currentSprint.id)
+            await this.getStaffWithReports(this.profile.id)
+
+            if (this.currentReport !== null) {
+                if (this.allUsers !== null)
+                    this.author = this.allUsers.filter(item => item.id === this.currentReport.author)[0] === undefined ? ''
+                        : this.allUsers.filter(item => item.id === this.currentReport.author)[0].name
+
+                for (let added of this.currentReport.tasks) {
+                    this.addedTasks.push(this.sprintTasks.filter(item => item.employeeId === this.currentReport.author && added.taskId === item.id)[0])
+                }
+
+                this.newTasks = this.sprintTasks.filter(item => item.employeeId === this.currentReport.author)
+                    .filter(item => moment(item.createdAt).isAfter(moment(this.currentReport.createdAt)) && !this.addedTasks.includes(item))
+
+                if (this.staffWithReports.length > 0) {
+                    for (let user of this.staffWithReports) {
+                        let userReport = this.sprintReports.filter(item => item.author === user.id)[0]
+                        if (!this.currentReport.staffReports.some(item => item.id === userReport.id))
+                            this.newStaffReports.push(userReport)
+                    }
+                }
+            }
         },
         async handleSave() {
             this.form = {
@@ -118,18 +167,47 @@ export default {
                 body: {
                     author: this.currentReport.author,
                     sprint: this.currentSprint.id,
-                    description: null,
+                    description: this.currentReport.description,
                     status: reports.reports.SUBMITTED,
-                    tasks: [],
-                    staffReports: []
+                    tasks: this.currentReport.tasks.concat(this.newTasks),
+                    newStaffReports: this.newStaffReports.concat(this.currentReport.staffReports)
                 }
             }
-            await this.updateReport(this.form).then(() => {
-                this.$toasted.show('Отчет был обновлен', {
-                    duration: 5000
-                })
-                this.handleBack()
-            })
+            switch (this.profile.role) {
+                case roles.roles.WORKER:
+                    await this.updateReport(this.form).then(() => {
+                        this.$toasted.show('Отчет был обновлен', {
+                            duration: 5000
+                        })
+                        this.handleBack()
+                    })
+                    break
+                case roles.roles.MANAGER:
+                case roles.roles.LEAD:
+                    if (this.newStaffReports.filter(item => item.status === this.status.DRAFT).length > 0
+                        || this.currentReport.staffReports.filter(item => item.status === this.status.DRAFT).length > 0) {
+                        alert("Сотрудники должны сохранить свои отчеты")
+                    } else {
+                        this.form = {
+                            id: this.currentReport.id,
+                            body: {
+                                author: this.currentReport.author,
+                                sprint: this.currentSprint.id,
+                                description: this.currentReport.description,
+                                status: reports.reports.SUBMITTED,
+                                tasks: this.currentReport.tasks.concat(this.newTasks),
+                                newStaffReports: this.newStaffReports.concat(this.currentReport.staffReports)
+                            }
+                        }
+                        await this.updateReport(this.form).then(() => {
+                            this.$toasted.show('Отчет был обновлен', {
+                                duration: 5000
+                            })
+                            this.handleBack()
+                        })
+                    }
+                    break
+            }
         },
         async handleDelete() {
             await this.deleteReport(this.currentReport.id).then(() => {
@@ -141,22 +219,7 @@ export default {
         }
     },
     async mounted() {
-        await this.getCurrentSprint()
-        await this.getReport(this.id)
-        await this.getAllUsers()
-        await this.getSprintTasks(this.currentSprint.id)
-
-        if (this.currentReport !== null) {
-            if (this.allUsers !== null)
-                this.author = this.allUsers.filter(item => item.id === this.currentReport.author)[0] === undefined ? ''
-                    : this.allUsers.filter(item => item.id === this.currentReport.author)[0].name
-
-            for (let added of this.currentReport.tasks) {
-                this.addedTasks.push(this.sprintTasks.filter(item => item.employeeId === this.currentReport.author && added.taskId === item.id)[0])
-            }
-
-            this.newTasks = this.sprintTasks.filter(item => item.employeeId === this.currentReport.author).filter(item => moment(item.createdAt).isAfter(moment(this.currentReport.createdAt)) && !this.addedTasks.includes(item))
-        }
+       await this.updateData()
     }
 }
 </script>

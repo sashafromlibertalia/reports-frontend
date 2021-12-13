@@ -63,6 +63,15 @@ const actions = {
         } catch (e) {
             console.log(e)
         }
+    },
+    async approveReports(_, payload) {
+        try {
+            await api.patch('reports/approve',{
+                leadId: payload
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 }
 
