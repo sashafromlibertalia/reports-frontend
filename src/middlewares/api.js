@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import helpers from "@/middlewares/helpers";
 
-const baseURL = 'https://localhost:5001/api/'
+const baseURL = 'https://webapp-211214093022.azurewebsites.net/api/'
 
 const api = axios.create({
     baseURL: baseURL,
