@@ -1,5 +1,7 @@
 # Reports
 
+> This project has a backend [repo](https://github.com/sashafromlibertalia/Reports-backend).
+
 ## Project setup
 ```
 npm install
