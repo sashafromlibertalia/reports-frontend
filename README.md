@@ -1,6 +1,9 @@
 # Reports
 
-> This project has a backend [repo](https://github.com/sashafromlibertalia/Reports-backend).
+> This project has a backend [repo](https://github.com/sashafromlibertalia/Reports-backend). 
+
+## Description
+The description of this lab can be found [here](DESCRIPTION.pdf)
 
 ## Project setup
 ```
